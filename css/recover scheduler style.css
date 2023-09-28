@@ -1,0 +1,503 @@
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 1100px;
+}
+
+.headerNav {
+    display: flex;
+    /* margin: 0 auto; */
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    justify-content: left;
+    column-gap: 8px;
+    /* margin-left: 8px;
+    align-self: end;    */
+}
+
+.navChangeMonth {
+    font-family: Arial, Helvetica, sans-serif;
+    /* border: 1px rgb(26, 125, 149) solid;
+    padding: 20px 60px; */
+}
+
+i {
+    border: 1px rgb(26, 125, 149) solid;
+    padding: 20px 30px;
+
+}
+
+i.fa {
+    font-size: 30px;
+}
+
+i.fa:hover {
+    background-color: rgb(120, 174, 188);
+}
+
+i.fa:active {
+    /* transform: skew(-4deg, 2deg); */
+    background-color: rgba(21, 119, 144, 0.963);
+}
+
+.navNameMonth {
+    font-family: Arial, Helvetica, sans-serif;
+    border: 1px rgb(26, 125, 149) solid;
+    padding: 20px 20px;
+}
+
+.navToday {
+    font-family: Arial, Helvetica, sans-serif;
+    border: 1px rgb(26, 125, 149) solid;
+    padding: 20px 60px;
+}
+
+.navToday:active {
+    /* transform: skew(-4deg, 2deg); */
+    background-color: rgba(21, 119, 144, 0.963);
+}
+
+.navToday:hover {
+    background-color: rgb(120, 174, 188);
+}
+
+.navYear {
+    font-family: Arial, Helvetica, sans-serif;
+    border: 1px rgb(26, 125, 149) solid;
+    padding: 20px 60px;
+}
+
+.navYear:active {
+    /* transform: skew(-4deg, 2deg); */
+    background-color: rgba(21, 119, 144, 0.963);
+}
+
+.navYear:hover {
+    background-color: rgb(120, 174, 188);
+}
+
+.content {
+    /* display: flex;
+    flex-direction: column;   */
+    display: grid;
+    grid-gap: 2px;
+    justify-content: center;
+    width: 1100px;
+}
+
+/* .table {
+    display: grid;
+    grid-gap: 2px;
+    justify-content: center;
+    width: 1100px;     
+} */
+
+.monthView {
+    grid-template-columns: repeat(7, calc(calc(100% / 7) - 2px));
+    grid-auto-rows: minmax(50px, 100px);
+}
+
+.cellTable {
+    border: 1px rgb(26, 125, 149) solid;
+}
+
+
+.yearView {
+    grid-template-columns: repeat(4, calc(calc(100% / 4) - 2px));
+    grid-auto-rows: minmax(252px, 150px);
+}
+
+.titleDaysWeek {
+    grid-template-columns: repeat(7, calc(calc(100% / 7) - 2px));
+    grid-template-rows: 30px;
+}
+
+.daysWeek {
+    justify-self: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 22px;
+    padding: 6px;
+}
+
+
+
+
+
+/* .tableYear {
+    display: grid;
+    grid-template-columns: repeat(4, calc(calc(100% / 4) - 2px));    
+    grid-gap: 2px;    
+    grid-auto-rows: minmax(252px, 150px);    
+    justify-content: center;     
+}
+.table {      
+    display: grid;
+    grid-template-columns: repeat(7, calc(calc(100% / 7) - 2px));    
+    grid-gap: 2px;    
+    grid-auto-rows: minmax(50px, 100px);   
+    justify-content: center;  
+    
+} 
+*/
+
+.cellMonth {
+    /* display: flex;
+    flex-direction: column;
+     
+    font-size: 18px;  
+    gap: 2px;
+    padding: 4px 6px;       */
+    border: 1px rgb(26, 125, 149) solid;
+    font-size: 18px;
+    gap: 2px;
+    padding: 4px 6px;
+}
+
+.nameday {
+    display: grid;
+    grid-template-columns: repeat(7, calc(calc(100% / 7) - 2px));
+    /* grid-template-rows: 30px 50px; */
+    grid-gap: 2px;
+    grid-auto-rows: minmax(30px, 10px);
+    justify-content: center;
+    /* border: none; */
+    font-size: 18px;
+}
+
+.dayW {
+    align-self: center;
+    justify-self: center;
+    border: 1px rgb(26, 125, 149) solid;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+}
+
+.daysMonth {
+    display: grid;
+    grid-template-columns: repeat(7, calc(calc(100% / 7) - 2px));
+    grid-gap: 2px;
+    grid-auto-rows: minmax(30px, 10px);
+    justify-content: center;
+}
+
+.cellDay {
+    display: flex;
+    flex-direction: column;
+    border: 1px rgb(26, 125, 149) solid;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+.presenceNote {
+    /* font-size: 20px;
+    color: red; */
+    background-color: red;
+    /* padding: 4px; */
+    border: 3px solid red;
+    border-radius: 50%;
+}
+
+
+
+
+
+.modalWindow {
+    background-color: rgba(0, 0, 0, 0.75);
+    /* border: 3px rgb(26, 125, 149) solid; */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    /* overflow-x: hidden;
+    overflow-y: auto;
+    outline: 0; */
+}
+
+.modalContent {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    height: 300px;
+    margin: 200px auto;
+    background-color: rgb(43, 180, 214);
+    border: 2px rgb(13, 35, 198) solid;
+    /* border-radius: 10px;     */
+}
+
+.modalHeader {
+    display: flex;
+    width: 500px;
+    height: 60px;
+    background-color: rgb(0, 0, 0);
+}
+
+.headerTitle {
+    text-align: center;
+    width: 100%;
+    font-size: 34px;
+    color: rgb(216, 216, 216);
+    padding-top: 6px;
+
+}
+
+.buttonClose {
+    height: 30px;
+    width: 30px;
+    margin: 6px;
+    background-color: white;
+    color: white;
+
+}
+
+.headerInput {
+    width: 500px;
+    height: 34px;
+    color: rgb(0, 0, 0);
+}
+
+.modalBody {
+    width: 500px;
+    height: 200px;
+    background-color: rgb(3, 4, 7);
+}
+
+.bodyInput {
+    width: 500px;
+    height: 50px;
+    color: rgb(0, 0, 0);
+    resize: none;
+    margin-bottom: -4px;
+}
+
+.modalFooter {
+    display: flex;
+    width: 500px;
+    height: 80px;
+    background-color: rgb(9, 8, 14);
+    gap: 20px;
+    align-items: center;
+    justify-content: end;
+}
+
+.buttonChooseColor {
+    display: flex;
+    padding: 6px 6px;
+    border: 2px white solid;
+    margin-bottom: 6px;
+    gap: 10px;
+    /* background-color: black; */
+}
+
+.circleOuter {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    background-color: white;
+}
+
+.circleInner {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    margin: 4px;
+    background-color: white;
+}
+
+/* 
+.purple {
+    border: 4px solid purple;
+}
+
+.yellow {
+    border: 4px solid yellow;
+}
+
+.red {
+    border: 4px solid red;
+}
+
+.green {
+    border: 4px solid green;
+}
+
+.blue {
+    border: 4px solid blue;
+} */
+
+
+/* .circlePurple {
+    border: 4px solid purple;
+}
+
+.bgcPurple:active {
+    background-color: purple;
+}
+
+.circleYellow {
+    border: 4px solid yellow;
+    border-radius: 50%;
+    padding: 12px;
+}
+
+.circleYellow:active {
+    background-color: yellow;
+}
+
+.circleRed {
+    background-color: red;
+    color: red;
+    border: 4px solid red;
+    border-radius: 50%;
+    box-shadow: 0.375em 0.375em 0 0 rgba(15, 28, 63, 0.125);
+    height: 10px;
+    width: 10px;
+    padding: 12px;
+}
+
+.circleGreen {
+    border: 4px solid green;
+    border-radius: 50%;
+    padding: 12px;
+}
+
+.circleBlue {
+    border: 4px solid blue;
+    border-radius: 50%;
+    padding: 12px;
+} */
+
+.buttonDelete {
+    text-align: center;
+    font-size: 30px;
+    /* background-color: white; */
+    color: white;
+    padding: 6px 14px;
+    border: 2px white solid;
+    margin-bottom: 6px;
+}
+
+.buttonDelete:active {
+    /* transform: skew(-4deg, 2deg); */
+    color: rgba(21, 119, 144, 0.963);
+}
+
+.buttonSave:active {
+    /* transform: skew(-4deg, 2deg); */
+    color: rgba(54, 21, 144, 0.963);
+}
+
+.buttonSave {
+    /* height: 30px; 
+    width: 80px;       */
+    text-align: center;
+    font-size: 30px;
+    /* background-color: white; */
+    margin-right: 6px;
+    color: white;
+    padding: 6px 14px;
+    border: 2px white solid;
+    margin-bottom: 6px;
+}
+
+.titleCell {
+    width: 120px;
+    border: 2px rgb(141, 20, 20) solid;
+    font-size: 12px;
+    height: 20px;
+    background-color: tan;
+}
+
+.modalWindowList {
+    background-color: rgba(0, 0, 0, 0.75);
+    /* border: 3px rgb(26, 125, 149) solid; */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.modalContentList {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    height: 300px;
+    margin: 200px auto;
+    background-color: rgb(43, 180, 214);
+    border: 2px rgb(13, 35, 198) solid;
+}
+
+.modalHeaderList {
+    display: flex;
+    width: 500px;
+    height: 60px;
+    background-color: rgb(0, 80, 100);
+}
+
+.headerTitleList {
+    text-align: center;
+    width: 100%;
+    font-size: 34px;
+    color: rgb(216, 216, 216);
+    padding-top: 6px;
+}
+
+.buttonCloseList {
+    height: 30px;
+    width: 30px;
+    margin: 6px;
+    background-color: white;
+    color: white;
+}
+
+.modalBodyList {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    height: 200px;
+    background-color: rgba(98, 92, 107, 0.6);
+    overflow-y: auto;
+    gap: 18px;
+}
+
+.bodyTitleEntry {
+    width: auto;
+    height: 30px;
+    margin: 0px 12px;
+    color: rgb(7, 6, 6);
+    background-color: rgb(175, 212, 249);
+    /* resize: none; */
+    /* margin-bottom: -4px; */
+    /* border-radius: 20px; */
+    outline: 14px ridge rgba(98, 92, 107, 0.6);
+    border-radius: 2rem;
+    text-align: center;
+    margin-top: 16px;
+    font-size: 20px;
+}
+
+.bodyTitleEntry:hover {
+    background-color: rgb(14, 107, 201);
+}
+
+.buttonAddNote {
+    width: auto;
+    height: 60px;
+    text-align: center;
+    font-size: 30px;
+    /* background-color: white; */
+    margin-right: 6px;
+    color: white;
+    /* padding: 4px 18px; */
+    /* border: 4px rgb(19, 45, 175) solid; */
+    /* margin-bottom: 18px; */
+
+}

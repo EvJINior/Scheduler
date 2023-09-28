@@ -1,0 +1,201 @@
+* {
+    box-sizing: border-box;    
+}
+
+.input_Year {
+    padding: 15px;
+    max-width: 100%; 
+    background-color: rgb(114, 114, 212); 
+    color: white; 
+}
+
+.input_Month {  
+    position: relative;
+    display: inline-block;
+
+    padding: 15px;
+    max-width: 100%; 
+    background-color: rgb(114, 114, 212); 
+    color: white; 
+}
+
+.list_months_ul { 
+    display: none;   
+    position: absolute;       
+    gap: 2px;
+    color: rgb(33, 178, 146); 
+    z-index: 1;
+}
+
+.list_li {
+    gap: 2px;
+    color: rgb(143, 159, 211); 
+    padding: 10px;
+    background-color: #295dac;
+    list-style-type: none;
+}
+
+.list_li:hover {
+    background-color: #3429cb;
+}
+
+.input_Month:hover .list_months_ul {
+    display: block;
+
+}
+.buttom_start {
+    padding: 15px;    
+    background-color: rgb(190, 114, 114); 
+}
+
+.container {   
+    display: grid;
+    grid-template-columns: repeat(7, 140px);
+    grid-template-rows: 30px 30px;    
+    grid-gap: 2px;    
+    grid-auto-rows: minmax(50px, 100px); 
+    margin-top: 30px;       
+    justify-content: center;             
+}
+
+i.fa {                
+    font-size: 30px;     
+    padding: 0px 26px;
+    color:rgb(0, 0, 0);
+    justify-self: center;       
+}
+
+i.fa:hover {
+    color: rgb(63, 130, 237);
+    background-color: rgb(150, 194, 233);    
+}
+
+i.fa:active {
+    color: rgb(32, 12, 186);
+    background-color: rgb(127, 157, 210);
+}
+
+.cell_Add_Options { 
+    grid-template-columns: repeat(14, 140px);   
+    border: none;
+    align-self: end;
+    margin-left: 8px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 26px;     
+}
+
+.today {    
+    border: none;
+    align-self: end;
+    margin-left: 8px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 26px;     
+}
+
+/* .cell_table {
+    border: 2px rgb(26, 125, 149) solid;
+} */
+
+/* .cell_Name_Days_Week {
+    border: none;     
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;    
+    margin-left: 8px;
+    align-self: end;        
+} */
+
+ .cell_table:nth-child(-n + 7) {
+    z-index: 1;
+    border: none;     
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;    
+    margin-left: 8px;
+    align-self: end;    
+} 
+
+.modal_window {    
+    border: 3px rgb(26, 125, 149) solid;
+    background-color: rgba(0, 0, 0, 0.75);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    outline: 0;    
+}
+
+.modal_content {  
+    display: block;
+    width: 350px;
+    height: 350px;    
+    margin: 200px auto;
+}
+
+.modal_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal_header_input {
+    height: 54px;
+    width: 350px;  
+    background-color: white;
+    
+}
+
+.modal_button_close {   
+    height: 50px; 
+    width: 50px;   
+    background-color: white;
+}
+
+.modal_body {          
+    background-color: rgba(29, 154, 136, 0.7);
+    gap: 20px;
+}
+
+.modal_body_input {
+    height: 240px;
+    width: 100%;
+    max-height: 350px;
+    color: rgb(78, 154, 113);
+    background-color: white;
+}
+
+.modal_footer {
+    display: flex;
+    max-width: 100%;
+    height: 60px;     
+    align-items: center;
+    justify-content: right;
+    background-color: white;
+}
+
+.modal_button_delete{  
+    height: 50px; 
+    width: 54px;   
+    margin: 0px 10px;
+    background-color: white;
+}
+
+.modal_button_save {  
+    height: 60px; 
+    width: 70px;   
+    background-color: white;       
+}
+
+.mini_modal_in_table {    
+    max-width: 94%;   
+    background-color: white;      
+    color: red;
+    padding: 4px;
+    height: 70px;
+    overflow: hidden;
+    font-size: 20px;
+    line-height: 22px;
+    overflow-wrap: break-word;
+}
