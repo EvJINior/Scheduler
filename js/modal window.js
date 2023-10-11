@@ -17,9 +17,8 @@ function separationObj(temporaryStorage) {
 
 function handlerStorage(separationObj, storageDate, separatedObjTitle, separatedObjText, indexTitle, indexTitleDel, color, index = 0) {   
   if (storageDate[separationObj[index]] === undefined || storageDate[separationObj[2]] != null) {
-    if (index === 2) {  
-      console.log('handler')
-  console.log(color) 
+    if (index === 2) {      
+ 
       if (indexTitleDel == true) {         
         storageDate[separationObj[index]].splice(indexTitle, 1)       
         return storageDate
@@ -118,9 +117,18 @@ function modalTaskList(cellTable, splitELem, dayInfo) {
   for (let i = 0; i < dayInfo.length; i++) {
     let bodyTitleEntry = document.createElement("div")
     bodyTitleEntry.setAttribute("class", "bodyTitleEntry")
-    bodyTitleEntry.setAttribute("type", "button")
-    bodyTitleEntry.innerHTML = dayInfo[i].title.substring(0, 46)
+    bodyTitleEntry.setAttribute("type", "button")    
+    bodyTitleEntry.style.outlineColor = dayInfo[i].color       
+    bodyTitleEntry.innerHTML = dayInfo[i].title.substring(0, 46)    
     modalBodyList.appendChild(bodyTitleEntry)   
+
+    bodyTitleEntry.onmouseover = function () {     
+      bodyTitleEntry.style.backgroundColor = dayInfo[i].color
+    }
+
+    bodyTitleEntry.onmouseout = function (){    
+      bodyTitleEntry.style.backgroundColor = 'rgb(175, 212, 249)'
+    }
     
     bodyTitleEntry.onclick = function () {
       modalWindowList.remove()
@@ -153,8 +161,8 @@ function removeTitle(elem) {
   }           
 }
 
-function circleChooseColor(buttonChooseColor, modalHeader, modalBody, modalFooter) {
-  let listColors = [ 'black', 'rgb(140, 70, 215)', 'rgb(113, 127, 6)', 'rgb(141, 16, 12)', 'rgb(11, 105, 27)', 'rgb(15, 9, 120)']
+function circleChooseColor(buttonChooseColor, modalContent) {
+  let listColors = ['rgb(140, 70, 215)', 'rgb(113, 127, 6)', 'rgb(141, 16, 12)', 'rgb(11, 105, 27)', 'rgb(15, 9, 120)']
   for (let i = 0; i < listColors.length; i++) {
     let circleOuter = document.createElement("div")       
     circleOuter.setAttribute("type", "button")   
@@ -176,15 +184,12 @@ function circleChooseColor(buttonChooseColor, modalHeader, modalBody, modalFoote
         circleInner.style.backgroundColor = listColors[i]           
         circleOuter.appendChild(circleInner)                
       }      
-
-       modalHeader.style.backgroundColor = listColors[i]   
-       modalBody.style.backgroundColor = listColors[i] 
-       modalFooter.style.backgroundColor = listColors[i]         
+      modalContent.style.borderColor = listColors[i]              
     }    
   }      
 }  
 
-function addColorBackGround (elem, splitELem, indexTitle) {
+function addColorBorder (elem, splitELem, indexTitle) {
   const dayInfo = searchStorage(
     JSON.parse(localStorage.getItem("storageDate")),
     splitELem[0],
@@ -193,7 +198,8 @@ function addColorBackGround (elem, splitELem, indexTitle) {
   )
 
   if(dayInfo[indexTitle] != null) {
-    elem.style.backgroundColor = dayInfo[indexTitle].color
+    // elem.style.backgroundColor = dayInfo[indexTitle].color
+    elem.style.borderColor = dayInfo[indexTitle].color
     }
 }
 
@@ -205,11 +211,11 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
   let modalContent = document.createElement("div")
   modalContent.setAttribute("class", "modalContent")
   modalWindow.appendChild(modalContent)
+  addColorBorder(modalContent, splitELem, indexTitle)
 
   let modalHeader = document.createElement("div")
   modalHeader.setAttribute("class", "modalHeader")
-  modalContent.appendChild(modalHeader)  
-  addColorBackGround(modalHeader, splitELem, indexTitle)
+  modalContent.appendChild(modalHeader)    
 
   let headerTitle = document.createElement("div")
   headerTitle.setAttribute("class", "headerTitle")
@@ -231,7 +237,7 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
   let modalBody = document.createElement("div")
   modalBody.setAttribute("class", "modalBody")
   modalContent.appendChild(modalBody)  
-  addColorBackGround(modalBody, splitELem, indexTitle)  
+  // addColorBackGround(modalBody, splitELem, indexTitle)  
   
   let bodyInput = document.createElement("textarea")
   bodyInput.setAttribute("class", "bodyInput")
@@ -242,13 +248,13 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
   let modalFooter = document.createElement("div")
   modalFooter.setAttribute("class", "modalFooter")
   modalContent.appendChild(modalFooter)
-  addColorBackGround(modalFooter, splitELem, indexTitle) 
+  // addColorBackGround(modalFooter, splitELem, indexTitle) 
 
   let buttonChooseColor = document.createElement("div")
   buttonChooseColor.setAttribute("class", "buttonChooseColor") 
   modalFooter.appendChild(buttonChooseColor, indexTitle)  
   
-  circleChooseColor(buttonChooseColor, modalHeader, modalBody, modalFooter)
+  circleChooseColor(buttonChooseColor, modalContent)
   
   if (titlecell.title != null) {
     let buttonDelete = document.createElement("div")
@@ -281,13 +287,17 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
   buttonSave.setAttribute("type", "button")
   modalFooter.appendChild(buttonSave)  
 
-  buttonSave.onclick = function () {       
+  buttonSave.onclick = function () { 
+    // if (headerInput.value == " Fill in the field !") {     
+    //   headerInput.value = ""
+    // }
+    
     let temporaryStorage = {
       date: splitELem,
       title: headerInput.value.trim(),
       text: bodyInput.value.trim(),
       indexTitle: indexTitle,
-      color: modalHeader.style.backgroundColor || modalBody.style.backgroundColor,           
+      color: modalContent.style.borderColor,           
     }
         
     if (titlecell != 'null') {        
@@ -295,7 +305,7 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
       removeTitle(elem)
       daysInfo(elem, titlecell)  
       return modalWindow.remove()  
-    }                                         
+    }                     
 
     if (temporaryStorage.title == "") {
       headerInput.style.border = "3px rgb(210, 0, 0) solid"
@@ -306,10 +316,10 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
         headerInput.style.border = "1px rgb(0, 0, 0) solid"
         headerInput.style.color = "rgb(0, 0, 0)"
         headerInput.value = ""
-      }, 500)
-      // При юыстром нажатии на Save сохраняется " Fill in the field !"
-    }    
-    
+      }, 300)
+      // При бЫыстром нажатии на Save сохраняется " Fill in the field !"
+    }   
+            
     separationObj(temporaryStorage)
   
     if (elem.contains(elem.querySelector(".titleCell"))) {
@@ -331,3 +341,33 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
 
 
 
+// function circleChooseColor(buttonChooseColor, modalHeader, modalBody, modalFooter) {
+//   let listColors = [ 'black', 'rgb(140, 70, 215)', 'rgb(113, 127, 6)', 'rgb(141, 16, 12)', 'rgb(11, 105, 27)', 'rgb(15, 9, 120)']
+//   for (let i = 0; i < listColors.length; i++) {
+//     let circleOuter = document.createElement("div")       
+//     circleOuter.setAttribute("type", "button")   
+//     circleOuter.setAttribute("class", "circleOuter")
+//     circleOuter.style.border = '4px solid ' + listColors[i]
+//     buttonChooseColor.appendChild(circleOuter)     
+
+//     circleOuter.onclick = function () {         
+//       for ( let k = 0; k < buttonChooseColor.querySelectorAll('.circleOuter').length; k++) {
+//         let checkNestedElem = buttonChooseColor.querySelectorAll('.circleOuter')[k]        
+//         if (checkNestedElem.contains(checkNestedElem.querySelector('.circleInner')) == true) {           
+//           checkNestedElem.querySelector('.circleInner').remove()
+//         }
+//       }
+
+//       if (circleOuter.contains(circleOuter.querySelector('.circleInner')) == false) {          
+//         let circleInner = document.createElement("div")
+//         circleInner.setAttribute("class", "circleInner")      
+//         circleInner.style.backgroundColor = listColors[i]           
+//         circleOuter.appendChild(circleInner)                
+//       }      
+
+//        modalHeader.style.backgroundColor = listColors[i]   
+//        modalBody.style.backgroundColor = listColors[i] 
+//        modalFooter.style.backgroundColor = listColors[i]         
+//     }    
+//   }      
+// } 
