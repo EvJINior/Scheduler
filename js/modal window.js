@@ -116,20 +116,14 @@ function modalTaskList(cellTable, splitELem, dayInfo) {
 
   for (let i = 0; i < dayInfo.length; i++) {
     let bodyTitleEntry = document.createElement("div")
-    bodyTitleEntry.setAttribute("class", "bodyTitleEntry")
+    bodyTitleEntry.setAttribute("class", "bodyTitleEntry highlightTitle")
     bodyTitleEntry.setAttribute("type", "button")    
     bodyTitleEntry.style.outlineColor = dayInfo[i].color       
     bodyTitleEntry.innerHTML = dayInfo[i].title.substring(0, 46)    
     modalBodyList.appendChild(bodyTitleEntry)   
 
-    bodyTitleEntry.onmouseover = function () {     
-      bodyTitleEntry.style.backgroundColor = dayInfo[i].color
-    }
+    bodyTitleEntry.style.backgroundColor = dayInfo[i].color
 
-    bodyTitleEntry.onmouseout = function (){    
-      bodyTitleEntry.style.backgroundColor = 'rgb(175, 212, 249)'
-    }
-    
     bodyTitleEntry.onclick = function () {
       modalWindowList.remove()
       modalWindow(cellTable, dayInfo[i], splitELem, i)          
@@ -198,7 +192,6 @@ function addColorBorder (elem, splitELem, indexTitle) {
   )
 
   if(dayInfo[indexTitle] != null) {
-    // elem.style.backgroundColor = dayInfo[indexTitle].color
     elem.style.borderColor = dayInfo[indexTitle].color
     }
 }
@@ -237,7 +230,6 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
   let modalBody = document.createElement("div")
   modalBody.setAttribute("class", "modalBody")
   modalContent.appendChild(modalBody)  
-  // addColorBackGround(modalBody, splitELem, indexTitle)  
   
   let bodyInput = document.createElement("textarea")
   bodyInput.setAttribute("class", "bodyInput")
@@ -248,7 +240,6 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
   let modalFooter = document.createElement("div")
   modalFooter.setAttribute("class", "modalFooter")
   modalContent.appendChild(modalFooter)
-  // addColorBackGround(modalFooter, splitELem, indexTitle) 
 
   let buttonChooseColor = document.createElement("div")
   buttonChooseColor.setAttribute("class", "buttonChooseColor") 
@@ -287,14 +278,22 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
   buttonSave.setAttribute("type", "button")
   modalFooter.appendChild(buttonSave)  
 
+function checkTemporaryStorageTitle (headerInput) {
+  if (headerInput.value == " Fill in the field !" || "") {     
+    return headerInput.value = ""
+  }
+  return headerInput.value
+}
+
   buttonSave.onclick = function () { 
     // if (headerInput.value == " Fill in the field !") {     
-    //   headerInput.value = ""
+    //   headerInput.value = ''
     // }
     
     let temporaryStorage = {
       date: splitELem,
-      title: headerInput.value.trim(),
+      // title: headerInput.value.trim(),
+      title: checkTemporaryStorageTitle(headerInput).trim(),
       text: bodyInput.value.trim(),
       indexTitle: indexTitle,
       color: modalContent.style.borderColor,           
@@ -317,7 +316,6 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
         headerInput.style.color = "rgb(0, 0, 0)"
         headerInput.value = ""
       }, 300)
-      // При бЫыстром нажатии на Save сохраняется " Fill in the field !"
     }   
             
     separationObj(temporaryStorage)
@@ -337,37 +335,3 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
     }
   }    
 }
-
-
-
-
-// function circleChooseColor(buttonChooseColor, modalHeader, modalBody, modalFooter) {
-//   let listColors = [ 'black', 'rgb(140, 70, 215)', 'rgb(113, 127, 6)', 'rgb(141, 16, 12)', 'rgb(11, 105, 27)', 'rgb(15, 9, 120)']
-//   for (let i = 0; i < listColors.length; i++) {
-//     let circleOuter = document.createElement("div")       
-//     circleOuter.setAttribute("type", "button")   
-//     circleOuter.setAttribute("class", "circleOuter")
-//     circleOuter.style.border = '4px solid ' + listColors[i]
-//     buttonChooseColor.appendChild(circleOuter)     
-
-//     circleOuter.onclick = function () {         
-//       for ( let k = 0; k < buttonChooseColor.querySelectorAll('.circleOuter').length; k++) {
-//         let checkNestedElem = buttonChooseColor.querySelectorAll('.circleOuter')[k]        
-//         if (checkNestedElem.contains(checkNestedElem.querySelector('.circleInner')) == true) {           
-//           checkNestedElem.querySelector('.circleInner').remove()
-//         }
-//       }
-
-//       if (circleOuter.contains(circleOuter.querySelector('.circleInner')) == false) {          
-//         let circleInner = document.createElement("div")
-//         circleInner.setAttribute("class", "circleInner")      
-//         circleInner.style.backgroundColor = listColors[i]           
-//         circleOuter.appendChild(circleInner)                
-//       }      
-
-//        modalHeader.style.backgroundColor = listColors[i]   
-//        modalBody.style.backgroundColor = listColors[i] 
-//        modalFooter.style.backgroundColor = listColors[i]         
-//     }    
-//   }      
-// } 

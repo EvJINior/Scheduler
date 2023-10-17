@@ -1,11 +1,4 @@
-    // let table = document.createElement('div')
-    // table.setAttribute('class', 'table')
-    // content.appendChild(table)
-
-    // export default table;
-
-  
-function startMonth(referenceDate, handlerNumbDay, content) {
+  function startMonth(referenceDate, handlerNumbDay, content) {
     let titleDaysWeek = document.createElement("div")
     titleDaysWeek.setAttribute("class", "titleDaysWeek content")
     content.appendChild(titleDaysWeek)
@@ -34,18 +27,12 @@ function startMonth(referenceDate, handlerNumbDay, content) {
         )
       cellTable.innerHTML = handlerNumbDay(days.getDate(), days.getMonth())
       cellTable.value = days.getFullYear() + "." + days.getMonth() + "." + addZero(days.getDate())    
-        
-      ///////////////////////////////////////////////////////
-      // createTitleCell (cellTable, cellTable)
-      // console.log(cellTable.value)
+      
       daysInfo(cellTable)
-        // console.log(cellTable.value )
-      //////////////////////////////////////////////////////
-  
+        
       cellTable.onclick = function (event) {      
         if (event.target == cellTable) {  
           const splitELem = cellTable.value.split(".") 
-          // console.log(splitELem)              
           const dayInfo = searchStorage(
           JSON.parse(localStorage.getItem("storageDate")),
           splitELem[0],
@@ -57,8 +44,7 @@ function startMonth(referenceDate, handlerNumbDay, content) {
         
           return modalWindow(cellTable, "null", splitELem)
         }
-        // modalTaskList(cellTable, splitELem)
-                //  modalWindow(cellTable)
+        
         modalTaskList(cellTable, splitELem, dayInfo)
         }
       }
@@ -103,13 +89,8 @@ function handlerYear(object) {
       cellMonth.appendChild(daysMonth)
   
       for (let n = 1; n < handlerDayWeek(new Date(object, numbMonth, 1).getDay()); n++) {
-        let cellDay = document.createElement("div")
-        // console.log(handlerDayWeek(new Date(object, numbMonth, 1).getDay()))
-        // cellTable.value = days.getFullYear() + "." + days.getMonth() + "." + addZero(days.getDate())
-        //  
-        daysMonth.appendChild(cellDay)
-        // if 
-        
+        let cellDay = document.createElement("div")        
+        daysMonth.appendChild(cellDay)            
       }
   
       for (let j = 0; j < lastDayMonth; j++) {
@@ -120,13 +101,10 @@ function handlerYear(object) {
         cellDay.value = object + "." + numbMonth + "." + addZero(cellDay.innerHTML)         
         daysMonth.appendChild(cellDay)
 
-        if (cellDay.value == new Date().getFullYear() + '.' + new Date().getMonth() + '.' + addZero(new Date().getDate())) {
-          // cellDay.style.border = '4px blue solid' 
+        if (cellDay.value == new Date().getFullYear() + '.' + new Date().getMonth() + '.' + addZero(new Date().getDate())) {          
           cellDay.style.backgroundColor = 'antiquewhite' 
         } 
-        // console.log(cellDay.value)
-        // console.log(new Date().getFullYear() + '.' + new Date().getMonth() + '.' + addZero(new Date().getDate()) )
-        
+
         const splitELem = cellDay.value.split(".")
         const dayInfo = searchStorage(
           JSON.parse(localStorage.getItem("storageDate")),
