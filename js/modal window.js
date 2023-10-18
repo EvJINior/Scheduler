@@ -278,33 +278,22 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
   buttonSave.setAttribute("type", "button")
   modalFooter.appendChild(buttonSave)  
 
-function checkTemporaryStorageTitle (headerInput) {
-  if (headerInput.value == " Fill in the field !" || "") {     
-    return headerInput.value = ""
+function checkTemporaryStorageTitle (elemHeader) {
+  if (elemHeader.value == " Fill in the field !") {     
+    return elemHeader.value = ""
   }
-  return headerInput.value
+  return elemHeader.value
 }
 
-  buttonSave.onclick = function () { 
-    // if (headerInput.value == " Fill in the field !") {     
-    //   headerInput.value = ''
-    // }
-    
+  buttonSave.onclick = function () {     
+
     let temporaryStorage = {
-      date: splitELem,
-      // title: headerInput.value.trim(),
+      date: splitELem,      
       title: checkTemporaryStorageTitle(headerInput).trim(),
       text: bodyInput.value.trim(),
       indexTitle: indexTitle,
       color: modalContent.style.borderColor,           
-    }
-        
-    if (titlecell != 'null') {        
-      separationObj(temporaryStorage)    
-      removeTitle(elem)
-      daysInfo(elem, titlecell)  
-      return modalWindow.remove()  
-    }                     
+    }                            
 
     if (temporaryStorage.title == "") {
       headerInput.style.border = "3px rgb(210, 0, 0) solid"
@@ -322,6 +311,8 @@ function checkTemporaryStorageTitle (headerInput) {
   
     if (elem.contains(elem.querySelector(".titleCell"))) {
       removeTitle(elem)      
+      daysInfo(elem, titlecell)
+      return modalWindow.remove()
     }
     
     daysInfo(elem) 
