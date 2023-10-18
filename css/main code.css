@@ -1,0 +1,115 @@
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 1100px;
+}
+
+.headerNav {
+    display: flex;
+    /* margin: 0 auto; */
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    justify-content: left;
+    column-gap: 8px;
+    /* margin-left: 8px;
+    align-self: end;    */
+}
+
+.navChangeMonth {
+    font-family: Arial, Helvetica, sans-serif;
+    /* border: 1px rgb(26, 125, 149) solid;
+    padding: 20px 60px; */
+}
+
+i {
+    border: 1px rgb(26, 125, 149) solid;
+    padding: 20px 30px;
+}
+
+i.fa {
+    font-size: 30px;
+}
+
+i.fa:hover {
+    background-color: rgb(120, 174, 188);
+}
+
+i.fa:active {
+    /* transform: skew(-4deg, 2deg); */
+    background-color: rgba(21, 119, 144, 0.963);
+}
+
+.navNameMonth {
+    font-family: Arial, Helvetica, sans-serif;
+    border: 1px rgb(26, 125, 149) solid;
+    padding: 20px 20px;
+}
+
+.navToday {
+    font-family: Arial, Helvetica, sans-serif;
+    border: 1px rgb(26, 125, 149) solid;
+    padding: 20px 60px;
+}
+
+.navToday:active {
+    /* transform: skew(-4deg, 2deg); */
+    background-color: rgba(21, 119, 144, 0.963);
+}
+
+.navToday:hover {
+    background-color: rgb(120, 174, 188);
+}
+
+.navYear {
+    font-family: Arial, Helvetica, sans-serif;
+    border: 1px rgb(26, 125, 149) solid;
+    padding: 20px 60px;
+}
+
+.navYear:active {
+    /* transform: skew(-4deg, 2deg); */
+    background-color: rgba(21, 119, 144, 0.963);
+}
+
+.navYear:hover {
+    background-color: rgb(120, 174, 188);
+}
+
+.content {
+    display: grid;
+    grid-gap: 2px;
+    justify-content: center;
+    width: 1100px;
+}
+
+.monthView {
+    grid-template-columns: repeat(7, calc(calc(100% / 7) - 2px));
+    grid-auto-rows: minmax(50px, 100px);
+}
+
+.cellTable {
+    border: 1px rgb(26, 125, 149) solid;
+}
+
+
+.yearView {
+    grid-template-columns: repeat(4, calc(calc(100% / 4) - 2px));
+    grid-auto-rows: minmax(252px, 150px);
+}
+
+.titleDaysWeek {
+    grid-template-columns: repeat(7, calc(calc(100% / 7) - 2px));
+    grid-template-rows: 30px;
+}
+
+.daysWeek {
+    justify-self: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 22px;
+    padding: 6px;
+}

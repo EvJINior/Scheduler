@@ -1,0 +1,56 @@
+.cellMonth {
+    /* display: flex;
+    flex-direction: column;
+     
+    font-size: 18px;  
+    gap: 2px;
+    padding: 4px 6px;       */
+    border: 1px rgb(26, 125, 149) solid;
+    font-size: 18px;
+    gap: 2px;
+    padding: 4px 6px;
+}
+
+.nameday {
+    display: grid;
+    grid-template-columns: repeat(7, calc(calc(100% / 7) - 2px));
+    /* grid-template-rows: 30px 50px; */
+    grid-gap: 2px;
+    grid-auto-rows: minmax(30px, 10px);
+    justify-content: center;
+    /* border: none; */
+    font-size: 18px;
+}
+
+.dayW {
+    align-self: center;
+    justify-self: center;
+    border: 1px rgb(26, 125, 149) solid;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+}
+
+.daysMonth {
+    display: grid;
+    grid-template-columns: repeat(7, calc(calc(100% / 7) - 2px));
+    grid-gap: 2px;
+    grid-auto-rows: minmax(30px, 10px);
+    justify-content: center;
+}
+
+.cellDay {
+    display: flex;
+    flex-direction: column;
+    border: 1px rgb(26, 125, 149) solid;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+.presenceNote {
+    /* font-size: 20px;
+    color: red; */
+    background-color: red;
+    /* padding: 4px; */
+    border: 3px solid red;
+    border-radius: 50%;
+}

@@ -196,6 +196,13 @@ function addColorBorder (elem, splitELem, indexTitle) {
     }
 }
 
+function checkTemporaryStorageTitle (elemHeader) {
+  if (elemHeader.value == " Fill in the field !") {     
+    return elemHeader.value = ""
+  }
+  return elemHeader.value
+}
+
 function modalWindow(elem, titlecell, splitELem, indexTitle) {         
   let modalWindow = document.createElement("div")
   modalWindow.setAttribute("class", "modalWindow")
@@ -277,13 +284,6 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
   buttonSave.innerHTML = "save"
   buttonSave.setAttribute("type", "button")
   modalFooter.appendChild(buttonSave)  
-
-function checkTemporaryStorageTitle (elemHeader) {
-  if (elemHeader.value == " Fill in the field !") {     
-    return elemHeader.value = ""
-  }
-  return elemHeader.value
-}
 
   buttonSave.onclick = function () {     
 
