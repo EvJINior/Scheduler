@@ -1,3 +1,54 @@
+function searchStorage(getObject, fragmentYear, fragmentMonth, fragmentDay) {
+  if (getObject == null) {
+    return {}
+  }
+  if (getObject[fragmentYear] == null) {
+    return {}
+  }
+  if (getObject[fragmentYear][fragmentMonth] == null) {
+    return {}
+  }
+  if (getObject[fragmentYear][fragmentMonth][fragmentDay] == null) {
+    return {}
+  }
+  return getObject[fragmentYear][fragmentMonth][fragmentDay]
+}
+
+function getInfoDay(elem, keySwitch) {
+  const splitELem = elem.value.split(".")
+  if (keySwitch == true){
+        const dayInfo = searchStorage(
+          JSON.parse(localStorage.getItem("storageDate")),
+          splitELem[0],
+          splitELem[1],
+          splitELem[2]
+        )
+        return dayInfo
+  }
+  return splitELem      
+}
+
+function daysInfo(elem) {     
+  for (let i = 0; i < getInfoDay(elem, true).length; i++) {          
+    let titleCell = document.createElement("div")
+    titleCell.setAttribute("class", "titleCell") 
+    titleCell.innerHTML = getInfoDay(elem, true)[i].title.substring(0, 15) 
+    titleCell.style.backgroundColor = getInfoDay(elem, true)[i].color      
+    elem.appendChild(titleCell) 
+      if (i > 2) {
+        titleCell.innerHTML = '...'
+        titleCell.onclick = function() {
+          modalTaskList(elem, getInfoDay(elem, false), getInfoDay(elem, true))
+        }        
+        return        
+      }   
+      
+    titleCell.onclick = function() {                   
+        modalWindow(elem, getInfoDay(elem, true)[i], getInfoDay(elem, false), i)                           
+      }  
+    }  
+  } 
+
   function startMonth(referenceDate, handlerNumbDay, content) {
     let titleDaysWeek = document.createElement("div")
     titleDaysWeek.setAttribute("class", "titleDaysWeek content")
@@ -31,21 +82,16 @@
       daysInfo(cellTable)
         
       cellTable.onclick = function (event) {      
-        if (event.target == cellTable) {  
-          const splitELem = cellTable.value.split(".") 
-          const dayInfo = searchStorage(
-          JSON.parse(localStorage.getItem("storageDate")),
-          splitELem[0],
-          splitELem[1],
-          splitELem[2]
-        )
-        
-        if (cellTable.contains(cellTable.querySelector('.titleCell')) == false) {    
-        
-          return modalWindow(cellTable, "null", splitELem)
-        }
-        
-        modalTaskList(cellTable, splitELem, dayInfo)
+        if (event.target == cellTable) {                
+
+          if (cellTable.contains(cellTable.querySelector('.titleCell')) == false) { 
+
+            return modalWindow(cellTable, "null", getInfoDay(cellTable, false))
+
+          }  
+
+        modalTaskList( cellTable, getInfoDay(cellTable, false), getInfoDay(cellTable, true) )
+
         }
       }
     }
@@ -104,15 +150,8 @@ function handlerYear(object) {
         if (cellDay.value == new Date().getFullYear() + '.' + new Date().getMonth() + '.' + addZero(new Date().getDate())) {          
           cellDay.style.backgroundColor = 'antiquewhite' 
         } 
-
-        const splitELem = cellDay.value.split(".")
-        const dayInfo = searchStorage(
-          JSON.parse(localStorage.getItem("storageDate")),
-          splitELem[0],
-          splitELem[1],
-          splitELem[2]
-        )
-          if (dayInfo.length > 0) {
+       
+          if ( getInfoDay(cellDay, true).length > 0 ) {
         let presenceNote = document.createElement("div")
         presenceNote.setAttribute("class", "presenceNote")
         // presenceNote.innerHTML = '✓'    
@@ -121,3 +160,4 @@ function handlerYear(object) {
       }
     }
   }
+

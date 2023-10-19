@@ -80,15 +80,6 @@ function handlerNumbDay(numb, month) {
   }
 }
 
-/*
-function removeElem(varrible, elem) {
-    for ( let i = 0; i < elem.length; i++) {    
-        varrible.removeChild(elem[i])
-    }
-}
-// removeElem(content, content.querySelectorAll('.cellMonth'))
-*/
-
 function highlightToday(elem) {
   let date = referenceDate.year + "." + referenceDate.month + "." + addZero(new Date().getDate())
   for (let i = 0; i < elem.length; i++) {
@@ -207,56 +198,10 @@ navYear.onclick = function () {
   highlightMonth(content.querySelectorAll(".cellMonth"))
 }
 
-///////////////////////////////////////
-
 let content = document.createElement("div")
 content.setAttribute("class", "content")
 container.appendChild(content)
 
 startMonth(referenceDate, handlerNumbDay, content)
 
-
-function searchStorage(getObject, fragmentYear, fragmentMonth, fragmentDay) {
-  if (getObject == null) {
-    return {}
-  }
-  if (getObject[fragmentYear] == null) {
-    return {}
-  }
-  if (getObject[fragmentYear][fragmentMonth] == null) {
-    return {}
-  }
-  if (getObject[fragmentYear][fragmentMonth][fragmentDay] == null) {
-    return {}
-  }
-  return getObject[fragmentYear][fragmentMonth][fragmentDay]
-}
-
-function daysInfo(elem) {  
-  const splitELem = elem.value.split(".")
-  const dayInfo = searchStorage(
-    JSON.parse(localStorage.getItem("storageDate")),
-    splitELem[0],
-    splitELem[1],
-    splitELem[2]
-  )
  
-  for (let i = 0; i < dayInfo.length; i++) {          
-    let titleCell = document.createElement("div")
-    titleCell.setAttribute("class", "titleCell") 
-    titleCell.innerHTML = dayInfo[i].title.substring(0, 15) 
-    titleCell.style.backgroundColor = dayInfo[i].color      
-    elem.appendChild(titleCell) 
-      if (i > 2) {
-        titleCell.innerHTML = '...'
-        titleCell.onclick = function() {
-          modalTaskList(elem, splitELem, dayInfo)
-        }        
-        return        
-      }   
-      
-    titleCell.onclick = function() {                   
-        modalWindow(elem, dayInfo[i], splitELem, i)                           
-      }  
-    }  
-  }  
