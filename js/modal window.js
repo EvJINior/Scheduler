@@ -9,15 +9,51 @@ function separationObj(temporaryStorage) {
     temporaryStorage.text,
     temporaryStorage.indexTitle,
     temporaryStorage.indexTitleDel,
-    temporaryStorage.color
+    temporaryStorage.color,
+    temporaryStorage.startRangeDateSave,
+    temporaryStorage.endRangeDateSave
   )
   localStorage.setItem("storageDate", JSON.stringify(separationObj))
 }
 
 
-function handlerStorage(separationObj, storageDate, separatedObjTitle, separatedObjText, indexTitle, indexTitleDel, color, index = 0) {   
+
+function handlerStorage(separationObj, storageDate, separatedObjTitle, separatedObjText, indexTitle, indexTitleDel, color, start, end, index = 0) {   
   if (storageDate[separationObj[index]] === undefined || storageDate[separationObj[2]] != null) {
     if (index === 2) {      
+
+      // console.log("handlerStorage")
+      // console.log(separationObj)
+      // // let rt = 
+      // // console.log(rt)
+       
+      // console.log(start)
+      // console.log(end)
+        // if (start !== end) {
+        //   storageDate[separationObj[index]][indexTitle] =         
+        //     {
+        //       title: separatedObjTitle,
+        //       text: separatedObjText,
+        //       color: color,
+        //       start: start,
+        //       end: end
+        //     }
+        //     separationObj == separationObj.splice(2, 1, +separationObj[2] + 1)
+        //     separationObj = 
+        //     storageDate[separationObj[index]] = handlerStorage(
+        //       separationObj,
+        //       storageDate[separationObj[index]],
+        //       separatedObjTitle,
+        //       separatedObjText,   
+        //       indexTitle,
+        //       indexTitleDel,
+        //       color,
+        //       separationObj,
+        //       end,
+        //       index + 1
+        //     )
+        // }
+       
  
       if (indexTitleDel == true) {         
         storageDate[separationObj[index]].splice(indexTitle, 1)       
@@ -29,7 +65,9 @@ function handlerStorage(separationObj, storageDate, separatedObjTitle, separated
           {
             title: separatedObjTitle,
             text: separatedObjText,
-            color: color
+            color: color,
+            start: start,
+            end: end
           }                      
         return storageDate
       } 
@@ -39,7 +77,9 @@ function handlerStorage(separationObj, storageDate, separatedObjTitle, separated
           {
             title: separatedObjTitle,
             text: separatedObjText,
-            color: color
+            color: color,
+            start: start,
+            end: end
           }            
         ] 
         return storageDate        
@@ -48,7 +88,9 @@ function handlerStorage(separationObj, storageDate, separatedObjTitle, separated
       let ret = {
         title: separatedObjTitle,
         text: separatedObjText,
-        color: color
+        color: color,
+        start: start,
+        end: end
       }      
       storageDate[separationObj[index]].push(ret)
       
@@ -56,6 +98,11 @@ function handlerStorage(separationObj, storageDate, separatedObjTitle, separated
     }
     storageDate[separationObj[index]] = {}
   }
+
+  // if (start !== end) {
+  //   separationObj == separationObj.splice(2, 1, +separationObj[2] + 1)
+  // }
+
   storageDate[separationObj[index]] = handlerStorage(
     separationObj,
     storageDate[separationObj[index]],
@@ -64,6 +111,8 @@ function handlerStorage(separationObj, storageDate, separatedObjTitle, separated
     indexTitle,
     indexTitleDel,
     color, 
+    start,
+    end,
     index + 1
   )
   return storageDate
@@ -86,7 +135,7 @@ function searchStorage(getObject, fragmentYear, fragmentMonth, fragmentDay) {
 }
 
 function modalTaskList(cellTable, splitELem, dayInfo) {
-  
+
   let modalWindowList = document.createElement("div")
   modalWindowList.setAttribute("class", "modalWindowList")
   document.body.appendChild(modalWindowList)
@@ -102,7 +151,7 @@ function modalTaskList(cellTable, splitELem, dayInfo) {
   let headerTitleList = document.createElement("div")
   headerTitleList.setAttribute("class", "headerTitleList")
   headerTitleList.innerHTML =
-    splitELem[2] + "  " + Months[splitELem[1]] + "  " + splitELem[0]
+    splitELem[2] + "  " + months[splitELem[1]] + "  " + splitELem[0]
   modalHeaderList.appendChild(headerTitleList)
 
   let buttonCloseList = document.createElement("img")
@@ -156,7 +205,7 @@ function removeTitle(elem) {
 }
 
 function circleChooseColor(buttonChooseColor, modalContent) {
-  let listColors = ['rgb(140, 70, 215)', 'rgb(113, 127, 6)', 'rgb(141, 16, 12)', 'rgb(11, 105, 27)', 'rgb(15, 9, 120)']
+  let listColors = ['rgb(140, 70, 215)', 'rgb(113, 127, 6)', 'rgb(141, 16, 12)']
   for (let i = 0; i < listColors.length; i++) {
     let circleOuter = document.createElement("div")       
     circleOuter.setAttribute("type", "button")   
@@ -203,7 +252,25 @@ function checkTemporaryStorageTitle (elemHeader) {
   return elemHeader.value
 }
 
-function modalWindow(elem, titlecell, splitELem, indexTitle) {         
+function getDayCellTable (valueElem) {   
+  let split = valueElem[0] + '.' + valueElem[1] + '.' + valueElem[2]
+  console.log("getDayCellTable")
+  // console.log(new Date (split))
+  // console.log("split")
+  // console.log(split)
+  let tty = document.querySelectorAll(".cellTable") 
+  for (let i = 0; i <= tty.length; i++) {
+    // console.log(tty[i].value)
+    if (split === tty[i].value) { 
+      console.log("tti")         
+      console.log(tty[i])         
+      return tty[i]
+    }
+  }
+}
+
+function modalWindow(elem, titlecell, splitELem, indexTitle) {
+        
   let modalWindow = document.createElement("div")
   modalWindow.setAttribute("class", "modalWindow")
   document.body.appendChild(modalWindow)
@@ -220,23 +287,22 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
   let headerTitle = document.createElement("div")
   headerTitle.setAttribute("class", "headerTitle")
   headerTitle.innerHTML =
-  splitELem[2] + "  " + Months[splitELem[1]] + "  " + splitELem[0]
+  splitELem[2] + "  " + months[splitELem[1]] + "  " + splitELem[0]
   modalHeader.appendChild(headerTitle)
 
   let buttonClose = document.createElement("img")
   buttonClose.setAttribute("class", "buttonClose")
   buttonClose.setAttribute("src", "icons/cross2.png")
-  modalHeader.appendChild(buttonClose)
-
-  let headerInput = document.createElement("input")
-  headerInput.setAttribute("class", "headerInput")
-  
-  headerInput.value = titlecell.title || elem.title || ""  
-  modalContent.appendChild(headerInput)
+  modalHeader.appendChild(buttonClose)    
 
   let modalBody = document.createElement("div")
   modalBody.setAttribute("class", "modalBody")
-  modalContent.appendChild(modalBody)  
+  modalContent.appendChild(modalBody)   
+
+  let headerInput = document.createElement("input")
+  headerInput.setAttribute("class", "headerInput")  
+  headerInput.value = titlecell.title || elem.title || ""  
+  modalBody.appendChild(headerInput)
   
   let bodyInput = document.createElement("textarea")
   bodyInput.setAttribute("class", "bodyInput")
@@ -244,13 +310,36 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
   bodyInput.value = titlecell.text || elem.text || ""
   modalBody.appendChild(bodyInput)
 
+  let modalSection = document.createElement("div")
+  modalSection.setAttribute("class", "modalSection")   
+  modalContent.appendChild(modalSection) 
+
+  let startRangeDate = document.createElement("div")
+  startRangeDate.setAttribute("class", "RangeDate") 
+  startRangeDate.setAttribute("type", "button")
+  startRangeDate.value = splitELem[0] + "." + splitELem[1] + "." + splitELem[2]
+  startRangeDate.innerHTML = startRangeDate.value
+  modalSection.appendChild(startRangeDate) 
+
+  let endRangeDate = document.createElement("div")
+  endRangeDate.setAttribute("class", "RangeDate")
+  endRangeDate.value = "2023.11.03".split(".")
+  endRangeDate.innerHTML = "2023.11.03"
+  endRangeDate.setAttribute("type", "button")
+  modalSection.appendChild(endRangeDate)
+
   let modalFooter = document.createElement("div")
   modalFooter.setAttribute("class", "modalFooter")
   modalContent.appendChild(modalFooter)
 
+  localStorage.clear()
+  // console.log(startRangeDate.value)
+  // console.log(endRangeDate.value)
+
   let buttonChooseColor = document.createElement("div")
   buttonChooseColor.setAttribute("class", "buttonChooseColor") 
-  modalFooter.appendChild(buttonChooseColor, indexTitle)  
+  // modalFooter.appendChild(buttonChooseColor, indexTitle)  ????????? Почему тут indexTitle
+  modalFooter.appendChild(buttonChooseColor, indexTitle)    
   
   circleChooseColor(buttonChooseColor, modalContent)
   
@@ -285,16 +374,25 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
   buttonSave.setAttribute("type", "button")
   modalFooter.appendChild(buttonSave)  
 
-  buttonSave.onclick = function () {     
+  buttonSave.onclick = function () {  
+    // console.log("начало функции")
+    // console.log(splitELem)   
 
     let temporaryStorage = {
-      date: splitELem,      
+      date: splitELem,       
       title: checkTemporaryStorageTitle(headerInput).trim(),
       text: bodyInput.value.trim(),
       indexTitle: indexTitle,
-      color: modalContent.style.borderColor,           
-    }                            
-
+      color: modalContent.style.borderColor,
+      startRangeDateSave: splitELem,               // Новое
+      endRangeDateSave: endRangeDate.value,                   // Новое
+    }              
+    
+    console.log("tyt")
+      console.log(temporaryStorage.startRangeDateSave)
+      console.log(temporaryStorage.date)
+      console.log(temporaryStorage.endRangeDateSave)
+       
     if (temporaryStorage.title == "") {
       headerInput.style.border = "3px rgb(210, 0, 0) solid"
       headerInput.value = " Fill in the field !"
@@ -315,7 +413,28 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
       return modalWindow.remove()
     }
     
-    daysInfo(elem) 
+    daysInfo(elem, false)   
+   
+    
+      
+    if (temporaryStorage.date !== temporaryStorage.endRangeDateSave) {
+      console.log("endRangeDateSave")
+      console.log(temporaryStorage.date)
+      console.log(temporaryStorage.endRangeDateSave)
+      
+      let w12 = ((new Date(temporaryStorage.endRangeDateSave[0], temporaryStorage.endRangeDateSave[1], temporaryStorage.endRangeDateSave[2]) - 
+              new Date(temporaryStorage.date[0], temporaryStorage.date[1], temporaryStorage.date[2])) 
+              / (1000 * 60 * 60 * 24))
+
+        for (let i = 0; i < w12; i++) {
+          
+          let plusDay = new Date(temporaryStorage.date[0], temporaryStorage.date[1], (+temporaryStorage.date[2] + 1))          
+        
+          temporaryStorage.date == temporaryStorage.date.splice(0, 3, plusDay.getFullYear(), plusDay.getMonth(), addZero (plusDay.getDate()))
+          separationObj(temporaryStorage)                                    
+          daysInfo ( getDayCellTable (temporaryStorage.date), true )  
+        }         
+      }
 
     modalWindow.remove()
   }

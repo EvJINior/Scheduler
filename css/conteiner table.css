@@ -48,3 +48,57 @@
     border: 3px solid red;
     border-radius: 50%;
 }
+
+.weeks {
+    display: flex;
+    flex-direction: column;
+    /* grid-template-columns: repeat(1, calc(calc(100% / 7) - 2px));
+    grid-auto-rows: minmax(50px, 100px); */
+}
+
+.numbMonth {
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #f00;
+}
+
+.nameMonth {
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #f00;
+}
+
+.weekContent {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+.weekMonth {
+    margin: 10px;
+}
+
+.weekTitle {
+    display: flex;
+    justify-content: center;
+}
+
+.weekPeriod {
+    display: flex;
+    justify-content: center;
+}
+
+.weekNestedDays {
+    display: flex;
+    /* margin-left: auto;
+    margin-right: auto; */
+    /* border: 3px rgb(126, 29, 8) solid; */
+    /* width: 26px;
+    height: 40px; */
+
+}
+
+.weekSevenDays {
+    /* display: flex; */
+    width: 22px;
+}

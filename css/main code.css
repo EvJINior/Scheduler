@@ -11,6 +11,7 @@
 
 .headerNav {
     display: flex;
+    flex-direction: row;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
     justify-content: left;
@@ -36,7 +37,6 @@ i.fa:hover {
 }
 
 i.fa:active {
-    /* transform: skew(-4deg, 2deg); */
     background-color: rgba(21, 119, 144, 0.963);
 }
 
@@ -108,4 +108,10 @@ i.fa:active {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 22px;
     padding: 6px;
+}
+
+.head {
+    display: flex;
+    flex-direction: column;
+
 }

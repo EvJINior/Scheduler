@@ -28,13 +28,34 @@ function getInfoDay(elem, keySwitch) {
   return splitELem      
 }
 
-function daysInfo(elem) {     
+function daysInfo(elem, key) {     
   for (let i = 0; i < getInfoDay(elem, true).length; i++) {          
     let titleCell = document.createElement("div")
     titleCell.setAttribute("class", "titleCell") 
     titleCell.innerHTML = getInfoDay(elem, true)[i].title.substring(0, 15) 
     titleCell.style.backgroundColor = getInfoDay(elem, true)[i].color      
     elem.appendChild(titleCell) 
+    console.log("getInfoDay")
+    // let ert = getInfoDay(elem, true)[i].start.sort().join('.')
+    // let ter = getInfoDay(elem, true)[i].end
+    // console.log(ert)
+    // console.log(ter)
+    console.log(getInfoDay(elem, true)[i].end)
+    console.log(getInfoDay(elem, true)[i].start.join('.'))
+    // let temporaryVar = +getInfoDay(elem, true)[i].end[2] + 1
+    let tem = getInfoDay(elem, true)[i].end.splice(2, 1, +getInfoDay(elem, true)[i].end[2] + 1)
+    console.log("temporaryVar")
+    console.log(tem)
+
+    // let tem = getInfoDay(elem, true)[i].start[2].split(0, 1, )
+      if(key){
+        if (getInfoDay(elem, true)[i].start.join('.') < getInfoDay(elem, true)[i].end.join('.')) {
+          console.log( "Gerty")
+          titleCell.innerHTML = ""
+          titleCell.style.backgroundColor = "rgb(255, 255, 255)"
+        }
+      }
+      
       if (i > 2) {
         titleCell.innerHTML = '...'
         titleCell.onclick = function() {
@@ -62,7 +83,7 @@ function daysInfo(elem) {
       let daysWeek = document.createElement("div")
       daysWeek.setAttribute("class", "daysWeek")
       daysWeek.innerHTML = nameDaysWeek[j]
-      titleDaysWeek.appendChild(daysWeek)
+      titleDaysWeek.appendChild(daysWeek)      
     }
   
     for (let i = 0; i < 42; i++) {
@@ -78,9 +99,11 @@ function daysInfo(elem) {
         )
       cellTable.innerHTML = handlerNumbDay(days.getDate(), days.getMonth())
       cellTable.value = days.getFullYear() + "." + days.getMonth() + "." + addZero(days.getDate())    
-      
+      // console.log("days")
+      // console.log(days)
+
       daysInfo(cellTable)
-        
+      
       cellTable.onclick = function (event) {      
         if (event.target == cellTable) {                
 
@@ -121,7 +144,7 @@ function handlerYear(object) {
       ).getDate()
       let nameday = document.createElement("div")
       nameday.setAttribute("class", "nameday")
-      cellMonth.appendChild(nameday)
+      cellMonth.appendChild(nameday)     
   
       for (let k = 0; k < 7; k++) {
         let dayW = document.createElement("div")
@@ -161,3 +184,113 @@ function handlerYear(object) {
     }
   }
 
+  // function handlerWeek (referenceDate, content,  handlerNumbDay) {
+
+  // let week = document.createElement("div")
+  //   week.setAttribute("class", "week")
+  //   week.setAttribute("type", "button")
+  //   content.appendChild(week)
+
+  // for (let i = 0; i < 42; i++) {
+  //   let weekTable = document.createElement("div")
+  //   weekTable.setAttribute("class", "weekTable")
+  //   weekTable.setAttribute("type", "button")
+  //   week.appendChild(weekTable)
+
+  //   let days = new Date(
+  //     referenceDate.year,
+  //     referenceDate.month,
+  //     i - handlerDayWeek(new Date(referenceDate.year, referenceDate.month, 1).getDay()) + 2
+  //     )
+  //     // console.log(days)
+
+  //     let counterWeek = new Date(
+  //       referenceDate.year,
+  //       3,
+  //       i - handlerDayWeek(new Date(referenceDate.year, 3, 1).getDay()) + 2
+  //       )
+  //       // console.log(new Date(referenceDate.year, 3, i).getDay())
+  //       // console.log(new Date(referenceDate.year, 3, i))
+  //       if (new Date(referenceDate.year, 3, i).getDay() === 1) {   
+  //     console.log(new Date(referenceDate.year, 3, i).getDay())
+  //     console.log(counterWeek)
+  //       }
+  //     // weekTable.innerHTML = handlerNumbDay(days.getDate(), days.getMonth())
+  //     weekTable.value = days.getFullYear() + "." + days.getMonth() + "." + addZero(days.getDate()) 
+  //   }
+  // }
+  
+
+  // function handlerWeek (referenceDate, weeks,  handlerNumbDay, getNumbMonth) {         
+
+  //     let numbMonth = document.createElement("div")
+  //     numbMonth.setAttribute("class", "numbMonth")      
+  //     numbMonth.innerHTML = handlerNumbDay(referenceDate.month)
+  //     weeks.appendChild(numbMonth)
+
+  //     let nameMonth = document.createElement("div")
+  //     nameMonth.setAttribute("class", "nameMonth")      
+  //     nameMonth.innerHTML = Months[referenceDate.month]
+  //     weeks.appendChild(nameMonth)
+
+  //     let weekContent = document.createElement("div")
+  //     weekContent.setAttribute("class", "weekContent")      
+  //     // weekContent.innerHTML = Months[referenceDate.month]
+  //     weeks.appendChild(weekContent)
+      
+
+  //   let counterWeek = 0;
+  //   for (let i = 0; i <= getNumbMonth; i++) {
+  //     for (let k = 0; k < new Date(referenceDate.year, i+1, 0).getDate(); k++) { // все дни месяца          
+  //       if (new Date(referenceDate.year, i+1, k).getDay() == 1) {
+  //         counterWeek = counterWeek + 1;           
+  //         if ( i == getNumbMonth ) {
+  //           let weekMonth = document.createElement("div")
+  //           weekMonth.setAttribute("class", "weekMonth")                           
+  //           weekContent.appendChild(weekMonth)
+
+  //           let weekTitle = document.createElement("div")
+  //           weekTitle.setAttribute("class", "weekTitle")         
+  //           weekTitle.innerHTML = 'Week ' + counterWeek
+  //           weekMonth.appendChild(weekTitle)
+
+  //           let weekPeriod = document.createElement("div")
+  //           weekPeriod.setAttribute("class", "weekPeriod")                       
+  //           weekPeriod.innerHTML = 
+  //           new Date(referenceDate.year, i+1, k).getMonth() + "/" + new Date(referenceDate.year, i+1, k).getDate() + " - " + 
+  //           new Date(referenceDate.year, i+1, k + 6).getMonth() + "/" + new Date(referenceDate.year, i+1, k + 6).getDate()
+  //           weekMonth.appendChild(weekPeriod)
+
+  //           let weekNestedDays = document.createElement("div")
+  //           weekNestedDays.setAttribute("class", "weekNestedDays")
+  //           weekMonth.appendChild(weekNestedDays)
+  //           console.log(counterWeek)
+  //           // console.log(new Date(referenceDate.year, i, k))
+            
+  //           // for (let n = new Date(referenceDate.year, i, 0).getDate(); n > new Date(referenceDate.year, i, 0).getDate() - 7; n--) {
+  //           //   let weekSevenDays = document.createElement("div")
+  //           //   weekSevenDays.setAttribute("class", "weekSevenDays")
+  //           //   weekSevenDays.innerHTML = new Date(referenceDate.year, i, n).getDate()              
+  //           //   weekNestedDays.appendChild(weekSevenDays)
+  //           //   console.log(new Date(referenceDate.year, i, k + j))
+  //           // }
+
+  //           for (let j = 0; j < 7; j++) {
+  //             let weekSevenDays = document.createElement("div")
+  //             weekSevenDays.setAttribute("class", "weekSevenDays")
+  //             weekSevenDays.innerHTML = new Date(referenceDate.year, i, k + j).getDate()
+  //             // cellTable.innerHTML = handlerNumbDay(days.getDate(), days.getMonth())
+  //             // cellTable.value = days.getFullYear() + "." + days.getMonth() + "." + addZero(days.getDate())
+  //             weekNestedDays.appendChild(weekSevenDays)
+  //             console.log(new Date(referenceDate.year, i, k + j))
+  //           }
+  //         }         
+  //         // let weekTable = document.createElement("div")
+  //         // weekTable.setAttribute("class", "weekTable")
+  //         // weekTable.setAttribute("type", "button")
+  //         // week.appendChild(weekTable)
+  //         // console.log(counterWeek = counterWeek + 1)
+  //       }
+  //     }
+  //   }
+  // }
