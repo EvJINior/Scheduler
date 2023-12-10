@@ -16,7 +16,7 @@ function searchStorage(getObject, fragmentYear, fragmentMonth, fragmentDay) {
 
 function getInfoDay(elem, keySwitch) {
   const splitELem = elem.value.split(".")
-  if (keySwitch == true){
+  if (keySwitch){
         const dayInfo = searchStorage(
           JSON.parse(localStorage.getItem("storageDate")),
           splitELem[0],
@@ -40,31 +40,34 @@ function daysInfo(elem, key) {
     // let ter = getInfoDay(elem, true)[i].end
     // console.log(ert)
     // console.log(ter)
-    console.log(getInfoDay(elem, true)[i].end)
-    console.log(getInfoDay(elem, true)[i].start.join('.'))
+    // console.log(getInfoDay(elem, true)[i].end)
+    // console.log(getInfoDay(elem, true)[i].start.join('.'))
     // let temporaryVar = +getInfoDay(elem, true)[i].end[2] + 1
-    let tem = getInfoDay(elem, true)[i].end.splice(2, 1, +getInfoDay(elem, true)[i].end[2] + 1)
-    console.log("temporaryVar")
-    console.log(tem)
+    // let tem = getInfoDay(elem, true)[i].end.splice(2, 1, +getInfoDay(elem, true)[i].end[2] + 1)
+    // console.log("temporaryVar")
+    // console.log(tem)
 
     // let tem = getInfoDay(elem, true)[i].start[2].split(0, 1, )
-      if(key){
-        if (getInfoDay(elem, true)[i].start.join('.') < getInfoDay(elem, true)[i].end.join('.')) {
-          console.log( "Gerty")
-          titleCell.innerHTML = ""
-          titleCell.style.backgroundColor = "rgb(255, 255, 255)"
-        }
-      }
+      // if(key){
+      //   // if (getInfoDay(elem, true)[i].start.join('.') < getInfoDay(elem, true)[i].end.join('.')) {
+      //     console.log( "Gerty")
+      //     titleCell.innerHTML = ""
+      //     titleCell.style.backgroundColor = "rgb(255, 255, 255)"
+      //   // }
+      // }
       
-      if (i > 2) {
+      if (i > 1) {
         titleCell.innerHTML = '...'
+        titleCell.style.backgroundColor = "tan" 
         titleCell.onclick = function() {
           modalTaskList(elem, getInfoDay(elem, false), getInfoDay(elem, true))
         }        
         return        
       }   
       
-    titleCell.onclick = function() {                   
+    titleCell.onclick = function() {       
+      console.log("getInfoDay(elem, true)[i]")            
+      console.log(getInfoDay(elem, true)[i])            
         modalWindow(elem, getInfoDay(elem, true)[i], getInfoDay(elem, false), i)                           
       }  
     }  
@@ -135,7 +138,7 @@ function handlerYear(object) {
   
       cellMonth.value = object + "." + numbMonth
       document.querySelectorAll(".cellMonth")[numbMonth].innerHTML =
-        Months[numbMonth]
+        months[numbMonth]
   
       let lastDayMonth = new Date(
         object,

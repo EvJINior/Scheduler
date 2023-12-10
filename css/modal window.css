@@ -59,16 +59,16 @@
 
 .headerInput {
     /* width: 500px; */
-    height: 40px;
+    height: 30px;
     color: rgb(0, 0, 0);
 }
 
 .bodyInput {
     /* width: 500px; */
-    height: 60px;
+    height: 50px;
     color: rgb(0, 0, 0);
     resize: none;
-    margin-bottom: -4px;
+    /* margin-bottom: -4px; */
 }
 
 .modalFooter {
@@ -238,18 +238,98 @@
 
 .modalSection {
     display: flex;
-    background-color: black;
-    gap: 6px;
-    margin-top: 10px;
+    /* background-color: black; */
+    /* gap: 6px; */
+    margin: 4px 0px;
+    justify-content: space-around;
+
 }
 
 .RangeDate {
+    display: grid;
+    grid-template-columns: repeat(3, 70px);
+    grid-template-rows: 12px 24px 12px;
+    grid-gap: 4px;
+
+    /* display: flex;
     width: 50%;
-    text-align: center;
-    font-size: 22px;
-    /* background-color: white; */
+    
+    justify-content: center;
+   
     margin: 0px 10px;
     color: white;
-    padding: 6px 14px;
+    
     border: 2px white solid;
+    align-items: center; */
 }
+
+.userSelectsDate {
+    display: flex;
+    /* width: 50px;
+    height: 20px; */
+    color: antiquewhite;
+    border: 2px rgb(43, 180, 214) solid;
+    border-radius: 4px;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+.userChoose {
+    width: 100%;
+    border: 1px white solid;
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+    background-color: red;
+}
+
+.switch {
+    border: 1px white solid;
+    font-size: 20px;
+    align-self: center;
+    height: 16px;
+    width: 16px;
+    justify-content: center;
+    opacity: 0;
+    transition: all ease 0.8s;
+}
+
+.switch:hover {
+    opacity: 1;
+}
+
+.user {
+    border: 1px white solid;
+    font-size: 10px;
+    height: 20px;
+}
+
+.Up {}
+
+.Down {}
+
+.upUs {
+    border: 1px white solid;
+    font-size: 20px;
+    align-self: center;
+    height: 16px;
+    width: 16px;
+    justify-content: center;
+}
+*/

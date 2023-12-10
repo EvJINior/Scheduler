@@ -26,9 +26,9 @@ const nameDaysWeek = [
 ]
 
 function addZero (elem) {
-  if (elem < 10) {
-  return elem = "0" + elem
-} 
+  if (elem < 10 && elem[0] != 0) {    
+    return elem = "0" + elem
+  } 
 return elem
 }
 
@@ -66,19 +66,23 @@ function changesDate(object) {
   getNavNameMonth[0].innerHTML = object.year + " " + months[object.month]
 }
 
+
+// ???????????????????????????????????????????????????????????????????????????????????
 function handlerNumbDay(numb, month) {
   let processedMonth = month + 1
   if (numb < 10) {
     if (numb == 1) {
       if (month < 9) return "0" + numb + "." + "0" + processedMonth
       else return "0" + numb + "." + processedMonth
-    } else {
+    } else {      
       return "0" + numb
     }
-  } else {
+  } else {    
     return numb
-  }
+  }  
 }
+// Для чего эта функция, пересмотреть её!!!
+// ???????????????????????????????????????????????????????????????????????????????????
 
 function highlightToday(elem) {
   let date = referenceDate.year + "." + referenceDate.month + "." + addZero(new Date().getDate())
@@ -162,7 +166,7 @@ ChangeRight.onclick = function () {
   if (content.contains(document.querySelector(".cellMonth")) == true) {
     content.querySelector(".yearView").remove()
     handlerYear((referenceDate.year += 1))
-    numbMonth.innerHTML = referenceDate.year
+    // numbMonth.innerHTML = referenceDate.year
   } else {    
     handlerMonth(referenceDate, (referenceDate.month += 1), referenceDate.year)
     changesDate(referenceDate)
@@ -175,7 +179,7 @@ ChangeLeft.onclick = function () {
   if (content.contains(document.querySelector(".cellMonth")) == true) {   
     content.querySelector(".yearView").remove()
     handlerYear((referenceDate.year -= 1))
-    numbMonth.innerHTML = referenceDate.year    
+    // numbMonth.innerHTML = referenceDate.year    
   } else {   
     handlerMonth(referenceDate, (referenceDate.month -= 1), referenceDate.year)
     changesDate(referenceDate)
@@ -214,7 +218,7 @@ navYear.onclick = function () {
   }
 
   highlightMonth(content.querySelectorAll(".cellMonth"))
-  numbMonth.innerHTML = referenceDate.year
+  // numbMonth.innerHTML = referenceDate.year
 }
 
 let content = document.createElement("div")

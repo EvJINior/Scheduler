@@ -9,16 +9,16 @@ function separationObj(temporaryStorage) {
     temporaryStorage.text,
     temporaryStorage.indexTitle,
     temporaryStorage.indexTitleDel,
-    temporaryStorage.color,
-    temporaryStorage.startRangeDateSave,
-    temporaryStorage.endRangeDateSave
+    temporaryStorage.color
+    // temporaryStorage.startRangeDateSave,
+    // temporaryStorage.endRangeDateSave
   )
   localStorage.setItem("storageDate", JSON.stringify(separationObj))
 }
 
 
 
-function handlerStorage(separationObj, storageDate, separatedObjTitle, separatedObjText, indexTitle, indexTitleDel, color, start, end, index = 0) {   
+function handlerStorage(separationObj, storageDate, separatedObjTitle, separatedObjText, indexTitle, indexTitleDel, color, index = 0) {   
   if (storageDate[separationObj[index]] === undefined || storageDate[separationObj[2]] != null) {
     if (index === 2) {      
 
@@ -59,27 +59,27 @@ function handlerStorage(separationObj, storageDate, separatedObjTitle, separated
         storageDate[separationObj[index]].splice(indexTitle, 1)       
         return storageDate
       }
+
+      
       
       if (indexTitle != null) {
+        console.log("storageDate[separationObj[index]][indexTitle]")
+      console.log(storageDate[separationObj[index]][indexTitle])
         storageDate[separationObj[index]][indexTitle] =         
           {
             title: separatedObjTitle,
             text: separatedObjText,
-            color: color,
-            start: start,
-            end: end
+            color: color,            
           }                      
         return storageDate
-      } 
+      }       
 
       if (storageDate[separationObj[index]] === undefined ) {     
         storageDate[separationObj[index]] = [
           {
             title: separatedObjTitle,
             text: separatedObjText,
-            color: color,
-            start: start,
-            end: end
+            color: color
           }            
         ] 
         return storageDate        
@@ -88,9 +88,7 @@ function handlerStorage(separationObj, storageDate, separatedObjTitle, separated
       let ret = {
         title: separatedObjTitle,
         text: separatedObjText,
-        color: color,
-        start: start,
-        end: end
+        color: color
       }      
       storageDate[separationObj[index]].push(ret)
       
@@ -110,9 +108,7 @@ function handlerStorage(separationObj, storageDate, separatedObjTitle, separated
     separatedObjText,   
     indexTitle,
     indexTitleDel,
-    color, 
-    start,
-    end,
+    color,
     index + 1
   )
   return storageDate
@@ -252,6 +248,9 @@ function checkTemporaryStorageTitle (elemHeader) {
   return elemHeader.value
 }
 
+
+///////////////////////////////////////////////
+
 function getDayCellTable (valueElem) {   
   let split = valueElem[0] + '.' + valueElem[1] + '.' + valueElem[2]
   console.log("getDayCellTable")
@@ -268,6 +267,13 @@ function getDayCellTable (valueElem) {
     }
   }
 }
+
+
+/////////////////////////////////////////////////
+
+
+
+
 
 function modalWindow(elem, titlecell, splitELem, indexTitle) {
         
@@ -316,23 +322,219 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
 
   let startRangeDate = document.createElement("div")
   startRangeDate.setAttribute("class", "RangeDate") 
-  startRangeDate.setAttribute("type", "button")
-  startRangeDate.value = splitELem[0] + "." + splitELem[1] + "." + splitELem[2]
-  startRangeDate.innerHTML = startRangeDate.value
-  modalSection.appendChild(startRangeDate) 
-
+  startRangeDate.setAttribute("type", "button") 
+  // userChooseDate (startRangeDate, splitELem)
+  displayDate (startRangeDate, splitELem)
+  modalSection.appendChild(startRangeDate)     
+  
   let endRangeDate = document.createElement("div")
-  endRangeDate.setAttribute("class", "RangeDate")
-  endRangeDate.value = "2023.11.03".split(".")
-  endRangeDate.innerHTML = "2023.11.03"
+  endRangeDate.setAttribute("class", "RangeDate") 
   endRangeDate.setAttribute("type", "button")
-  modalSection.appendChild(endRangeDate)
+  // userChooseDate (endRangeDate, splitELem)  
+  displayDate (endRangeDate, splitELem)
+  modalSection.appendChild(endRangeDate)  
+
+
+
+
+  function checkDate (elem, getElemRangeDate, i, key) {    
+    
+    const elemsFromDispleyDate = elem.querySelectorAll(".userSelectsDate")
+
+    getElemRangeDate = (key) ? getElemRangeDate += 1 : getElemRangeDate -= 1
+
+    if ( i == 3 ) {   
+      let elemDate = new Date (elemsFromDispleyDate[5].value, elemsFromDispleyDate[4].value, getElemRangeDate)     
+      
+      elemsFromDispleyDate[3].value = addZero (elemDate.getDate())
+      elemsFromDispleyDate[3].innerHTML = addZero (elemDate.getDate())
+      
+      elemsFromDispleyDate[4].value = elemDate.getMonth()
+      elemsFromDispleyDate[4].innerHTML = addZero (elemDate.getMonth() + 1)
+
+      elemsFromDispleyDate[5].value = elemDate.getFullYear()
+      elemsFromDispleyDate[5].innerHTML = elemDate.getFullYear()
+
+      return elemsFromDispleyDate[3].value
+    }
+
+    if ( i == 4 ) {        
+
+      let elemDate = new Date (elemsFromDispleyDate[5].value, getElemRangeDate)
+      
+      if ( elemsFromDispleyDate[3].value > new Date (elemsFromDispleyDate[5].value, getElemRangeDate + 1, 0).getDate()) {
+        elemsFromDispleyDate[3].value = addZero (+new Date (elemsFromDispleyDate[5].value, getElemRangeDate + 1, 0).getDate()) 
+        elemsFromDispleyDate[3].innerHTML = addZero (+new Date (elemsFromDispleyDate[5].value, getElemRangeDate + 1, 0).getDate())  
+      }     
+      
+      elemsFromDispleyDate[4].value = elemDate.getMonth()
+      elemsFromDispleyDate[4].innerHTML = addZero (elemDate.getMonth() + 1) 
+
+      elemsFromDispleyDate[5].value = elemDate.getFullYear()
+      elemsFromDispleyDate[5].innerHTML = elemDate.getFullYear()
+
+      return elemDate.getMonth()
+    }
+
+    if ( i == 5 ) {  
+      console.log("new Date")
+      console.log(new Date (getElemRangeDate, elemsFromDispleyDate[4].value + 1, 0).getDate())      
+
+      if ( elemsFromDispleyDate[3].value > new Date (getElemRangeDate, elemsFromDispleyDate[4].value + 1, 0).getDate()) {
+        elemsFromDispleyDate[3].value = addZero (+new Date (getElemRangeDate, elemsFromDispleyDate[4].value + 1, 0).getDate())
+        elemsFromDispleyDate[3].innerHTML = addZero (+new Date (getElemRangeDate, elemsFromDispleyDate[4].value + 1, 0).getDate())  
+
+        console.log(" Date")
+      } 
+      
+      elemsFromDispleyDate[5].value = getElemRangeDate
+      elemsFromDispleyDate[5].innerHTML = getElemRangeDate
+
+      return getElemRangeDate
+    }       
+  }
+
+
+
+
+
+
+  function displayDate (elem, splitELem) {
+
+    for (let i = 0; i < 9; i++) {
+      let userSelectsDate = document.createElement("div")
+      userSelectsDate.setAttribute("class", "userSelectsDate")
+      userSelectsDate.setAttribute("type", "button")
+      userSelectsDate.innerHTML = "-"
+      elem.appendChild(userSelectsDate)   
+  
+      let getElemChooseUser = elem.querySelectorAll(".userSelectsDate")[i]
+  
+      if ( i > 2 && i < 6) {      
+        userSelectsDate.value = splitELem[5-i]
+        userSelectsDate.innerHTML = userSelectsDate.value
+        if (i === 4) {
+            userSelectsDate.value = splitELem[5-i] 
+            userSelectsDate.innerHTML = +userSelectsDate.value + 1
+        }     
+      }    
+  
+      if ( i < 3 ) {               
+        getElemChooseUser.onclick = function () {
+
+          let  getElemRangeDate = elem.querySelectorAll(".userSelectsDate")
+
+          getElemRangeDate[i + 3].value = checkDate (elem, +getElemRangeDate[i + 3].value, i + 3, true)              
+
+          elem.value = getElemRangeDate[5].value + "." + getElemRangeDate[4].value + "." + getElemRangeDate[3].value
+
+          console.log(elem.value)
+            }
+          } 
+        
+        
+        if ( i > 5 ) {        
+        getElemChooseUser.onclick = function () {
+
+          let  getElemRangeDate = elem.querySelectorAll(".userSelectsDate") 
+          
+          getElemRangeDate[i - 3].value = checkDate (elem, +getElemRangeDate[i - 3].value, i - 3, false)              
+
+          elem.value = getElemRangeDate[5].value + "." + getElemRangeDate[4].value + "." + getElemRangeDate[3].value
+          
+              console.log(elem.value)
+          }
+        }                      
+      }        
+    }  
+
+    console.log("value")
+    console.log(elem.value)
+
+
+
+
+
+
+
+
+//   function displayDate (elem, splitELem) {
+//   for (let i = 0; i < 9; i++) {
+//     let userSelectsDate = document.createElement("div")
+//     userSelectsDate.setAttribute("class", "userSelectsDate")
+//     userSelectsDate.setAttribute("type", "button")
+//     userSelectsDate.innerHTML = "-"
+//     elem.appendChild(userSelectsDate)   
+
+//     let getElemChooseUser = elem.querySelectorAll(".userSelectsDate")[i]
+
+//     if ( i > 2 && i < 6) {      
+//       userSelectsDate.innerHTML = splitELem[5-i]
+//       // console.log(getElemUserChoose)
+//     }    
+
+//     if ( i < 3 ) {        
+//       // let getElemUserChoose = endRangeDate.querySelectorAll(".userChoose")[i]
+//       getElemChooseUser.onclick = function fet () {        
+//         let  getElemRangeDate = elem.querySelectorAll(".userSelectsDate")
+//         getElemRangeDate[i + 3].innerHTML = checkDate (+getElemRangeDate[i + 3].innerHTML, 
+//           getElemRangeDate[3].innerHTML, getElemRangeDate[4].innerHTML, getElemRangeDate[5].innerHTML)
+          
+//             // console.log(endRangeDate.querySelectorAll(".userSelectsDate")[3], endRangeDate.querySelectorAll(".userSelectsDate")[4], 
+//             // endRangeDate.querySelectorAll(".userSelectsDate")[5])
+//         } 
+//       }
+      
+//       if ( i > 5 ) {
+//         // let getElemUserChoose = endRangeDate.querySelectorAll(".userChoose")[i]
+//       getElemChooseUser.onclick = function fet () {
+//         let  getElemRangeDate = elem.querySelectorAll(".userSelectsDate")[i - 3]          
+//         getElemRangeDate.innerHTML = +getElemRangeDate.innerHTML - 1
+//             // console.log(getE)
+//       }
+//     }     
+//   }
+// }
+
+// console.log(endRangeDate.querySelectorAll(".userSelectsDate")[3].innerHTML)
+  // for (let i = 0; i < 9; i++) {
+  // let getElemUserChoose = endRangeDate.querySelectorAll(".userChoose")
+  // console.log(getElemUserChoose)
+  // }
+
+  // let userChooseDay = document.createElement("div")
+  // userChooseDay.setAttribute("class", "userChoose")
+  // userChooseDay.setAttribute("type", "button")
+  // // buttonUser (userChooseDay)
+  // userChooseDay.value = 24
+  // console.log(userChooseDay.value)
+  // // userChooseDay.innerHTML = userChooseDay.value
+  // // ButtonsSwitching (userChooseDay, splitELem[2], false, userChooseYear, userChooseMonth ) 
+  
+  // endRangeDate.appendChild(userChooseDay)
+
+  // let upUs = document.createElement("div")
+  //   upUs.setAttribute("class", "upUs")
+  //   upUs.setAttribute("type", "button")
+  //   // switchDown.innerHTML = "-"
+  //   elem.appendChild(upUs)
+
+  // endRangeDate.innerHTML = userChooseDay.value 
+
+  // function buttonUser (elem) {
+  //   let upUs = document.createElement("div")
+  //   upUs.setAttribute("class", "upUs")
+  //   upUs.setAttribute("type", "button")
+  //   // switchDown.innerHTML = "-"
+  //   elem.appendChild(upUs) 
+  // }
+
 
   let modalFooter = document.createElement("div")
   modalFooter.setAttribute("class", "modalFooter")
   modalContent.appendChild(modalFooter)
 
-  localStorage.clear()
+  // localStorage.clear()
   // console.log(startRangeDate.value)
   // console.log(endRangeDate.value)
 
@@ -367,31 +569,51 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
       modalWindow.remove()
     }
   }
-  
+ 
   let buttonSave = document.createElement("div")  
   buttonSave.setAttribute("class", "buttonSave")
   buttonSave.innerHTML = "save"
   buttonSave.setAttribute("type", "button")
   modalFooter.appendChild(buttonSave)  
 
-  buttonSave.onclick = function () {  
-    // console.log("начало функции")
-    // console.log(splitELem)   
+  buttonSave.onclick = function () {      
 
     let temporaryStorage = {
-      date: splitELem,       
+
+      date: splitELem,      
+
       title: checkTemporaryStorageTitle(headerInput).trim(),
+
       text: bodyInput.value.trim(),
+
       indexTitle: indexTitle,
+
       color: modalContent.style.borderColor,
-      startRangeDateSave: splitELem,               // Новое
-      endRangeDateSave: endRangeDate.value,                   // Новое
-    }              
+
+      endRangeDateTemp: endRangeDate.value
+
+    }
+
+    // console.log("buttonSave.temporaryStorage.color")
+    console.log(temporaryStorage)
+      // startRangeDateSave: 
+      // startRangeDate.querySelectorAll('.user')[0].innerHTML +
+      // "." + startRangeDate.querySelectorAll('.user')[1].innerHTML +
+      // "." + startRangeDate.querySelectorAll('.user')[2].innerHTML,
+
+      // endRangeDateSave: 
+      // endRangeDate.querySelectorAll('.user')[0].innerHTML + 
+      // "." + endRangeDate.querySelectorAll('.user')[1].innerHTML +
+      // "." + endRangeDate.querySelectorAll('.user')[2].innerHTML,
+
+         
+
+            
     
-    console.log("tyt")
-      console.log(temporaryStorage.startRangeDateSave)
-      console.log(temporaryStorage.date)
-      console.log(temporaryStorage.endRangeDateSave)
+    // console.log("tyt")
+    //   console.log(temporaryStorage.startRangeDateSave)
+    //   console.log(temporaryStorage.date)
+    //   console.log(temporaryStorage.endRangeDateSave)
        
     if (temporaryStorage.title == "") {
       headerInput.style.border = "3px rgb(210, 0, 0) solid"
@@ -403,9 +625,46 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
         headerInput.style.color = "rgb(0, 0, 0)"
         headerInput.value = ""
       }, 300)
-    }   
-            
-    separationObj(temporaryStorage)
+    }                  
+             
+    // if (temporaryStorage.startRangeDateSave !== temporaryStorage.endRangeDateSave) {
+    //   temporaryStorage.startRangeDateSave = temporaryStorage.startRangeDateSave.split(".")
+    //   temporaryStorage.endRangeDateSave = temporaryStorage.endRangeDateSave.split(".")
+
+    //   console.log("temporaryStorage.date, start, end")
+    //   // console.log(temporaryStorage.date)
+    //   console.log(temporaryStorage.startRangeDateSave)
+    //   console.log(temporaryStorage.endRangeDateSave)
+
+      
+      
+//       let numbSelectDays = ((new Date(temporaryStorage.endRangeDateSave[0], temporaryStorage.endRangeDateSave[1], temporaryStorage.endRangeDateSave[2]) - 
+//               new Date(temporaryStorage.startRangeDateSave[0], temporaryStorage.startRangeDateSave[1], temporaryStorage.startRangeDateSave[2])) 
+//               / (1000 * 60 * 60 * 24))
+//               console.log("numbSelectDays")
+//       console.log(numbSelectDays)
+// // let daysTest = +temporaryStorage.startRangeDateSave[2]
+//         for (let i = 0; i < numbSelectDays; i++) {
+          
+//           let plusDay = new Date(temporaryStorage.startRangeDateSave[0], temporaryStorage.startRangeDateSave[1],
+//              (+temporaryStorage.startRangeDateSave[2] + 1))   
+//           // console.log("plusDay")
+//           // console.log(plusDay)
+//         let numbNumb = 2 + i
+//         // console.log("numbNumb")
+//         //   console.log(numbNumb)
+//           temporaryStorage.date = temporaryStorage.startRangeDateSave.splice(0, 3, plusDay.getFullYear(), plusDay.getMonth(), addZero (plusDay.getDate()))
+//           // console.log("temporaryStorage.date TESTEST")
+//           // console.log(temporaryStorage.date)
+//           temporaryStorage.title = numbNumb.toString()
+//           // console.log(temporaryStorage)
+//           separationObj(temporaryStorage)                                    
+//           daysInfo ( getDayCellTable (temporaryStorage.date), true )  
+//         }         
+//         return modalWindow.remove()
+//       }
+
+      separationObj(temporaryStorage)
   
     if (elem.contains(elem.querySelector(".titleCell"))) {
       removeTitle(elem)      
@@ -413,28 +672,7 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
       return modalWindow.remove()
     }
     
-    daysInfo(elem, false)   
-   
-    
-      
-    if (temporaryStorage.date !== temporaryStorage.endRangeDateSave) {
-      console.log("endRangeDateSave")
-      console.log(temporaryStorage.date)
-      console.log(temporaryStorage.endRangeDateSave)
-      
-      let w12 = ((new Date(temporaryStorage.endRangeDateSave[0], temporaryStorage.endRangeDateSave[1], temporaryStorage.endRangeDateSave[2]) - 
-              new Date(temporaryStorage.date[0], temporaryStorage.date[1], temporaryStorage.date[2])) 
-              / (1000 * 60 * 60 * 24))
-
-        for (let i = 0; i < w12; i++) {
-          
-          let plusDay = new Date(temporaryStorage.date[0], temporaryStorage.date[1], (+temporaryStorage.date[2] + 1))          
-        
-          temporaryStorage.date == temporaryStorage.date.splice(0, 3, plusDay.getFullYear(), plusDay.getMonth(), addZero (plusDay.getDate()))
-          separationObj(temporaryStorage)                                    
-          daysInfo ( getDayCellTable (temporaryStorage.date), true )  
-        }         
-      }
+    daysInfo(elem, false)  
 
     modalWindow.remove()
   }
@@ -445,3 +683,111 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
     }
   }    
 }
+
+
+/*
+
+function userChooseDate (elem, splitELem) {
+  
+  let userChooseYear = document.createElement("div")
+  userChooseYear.setAttribute("class", "userChoose")
+  userChooseYear.setAttribute("type", "button")  
+  ButtonsSwitching (userChooseYear, splitELem[0], false) 
+  elem.appendChild(userChooseYear)   
+
+  let dividingPoint = document.createElement("div")
+  dividingPoint.setAttribute("class", "dividingPoint")
+  dividingPoint.innerHTML = "."
+  elem.appendChild(dividingPoint)
+
+  let userChooseMonth = document.createElement("div")
+  userChooseMonth.setAttribute("class", "userChoose")
+  userChooseMonth.setAttribute("type", "button")
+  ButtonsSwitching (userChooseMonth, splitELem[1], true)
+  elem.appendChild(userChooseMonth)
+  
+  let secondDividingPoint = document.createElement("div")
+  secondDividingPoint.setAttribute("class", "dividingPoint")
+  secondDividingPoint.innerHTML = "."
+  elem.appendChild(secondDividingPoint)
+
+  let userChooseDay = document.createElement("div")
+  userChooseDay.setAttribute("class", "userChoose")
+  userChooseDay.setAttribute("type", "button")
+  ButtonsSwitching (userChooseDay, splitELem[2], false, userChooseYear, userChooseMonth ) 
+  elem.appendChild(userChooseDay) 
+
+}
+
+function ButtonsSwitching (elem, chooseDate, keystrokeMonth, userChooseYear, userChooseMonth) {
+ 
+  let switchUp = document.createElement("div")
+  switchUp.setAttribute("class", "switch Down")  
+  switchUp.setAttribute("type", "button")
+  switchUp.innerHTML = "+"
+  elem.appendChild(switchUp)
+
+  let userDate = document.createElement("div")  
+  userDate.setAttribute("class", "user")    
+  elem.value = chooseDate   
+  userDate.innerHTML = chooseDate  
+  elem.appendChild(userDate) 
+  
+  let switchDown = document.createElement("div")
+  switchDown.setAttribute("class", "switch Up")
+  switchDown.setAttribute("type", "button")
+  switchDown.innerHTML = "-"
+  elem.appendChild(switchDown) 
+
+  switchUp.onclick = function () {
+
+    userDate.innerHTML = addZero ( +userDate.innerHTML + 1 )     
+
+    if ( keystrokeMonth && userDate.innerHTML > 12 ) {
+
+      userDate.innerHTML = addZero ( 1 )    
+
+    }        
+
+    if (userChooseMonth != null) {
+
+      let getChooseUserYear = userChooseYear.querySelector('.user').innerHTML
+      let getChooseUserMonth = userChooseMonth.querySelector('.user').innerHTML
+        
+      if (userDate.innerHTML > new Date(getChooseUserYear, getChooseUserMonth, 0).getDate()) {
+
+       userDate.innerHTML = addZero ( 1 )   
+
+      }       
+    }  
+
+    elem.value = addZero (userDate.innerHTML)   
+
+  }
+
+  switchDown.onclick = function () {
+
+    userDate.innerHTML = addZero ( +userDate.innerHTML - 1 )  
+
+    if ( keystrokeMonth && userDate.innerHTML < 1 ) {
+
+      userDate.innerHTML = 12   
+
+    }
+
+    if ( userChooseMonth != null ) {
+
+      let getChooseUserYear = userChooseYear.querySelector('.user').innerHTML
+      let getChooseUserMonth = userChooseMonth.querySelector('.user').innerHTML
+
+      if (userDate.innerHTML < 1) {
+
+        userDate.innerHTML = new Date(getChooseUserYear, getChooseUserMonth, 0).getDate()       
+      }      
+    }  
+
+     elem.value = addZero ( userDate.innerHTML ) 
+  }  
+ }
+
+*/
