@@ -16,7 +16,7 @@ function searchStorage(getObject, fragmentYear, fragmentMonth, fragmentDay) {
 
 function getInfoDay(elem, keySwitch) {
   const splitELem = elem.value.split(".")
-  if (keySwitch){
+  if ( keySwitch ) {
         const dayInfo = searchStorage(
           JSON.parse(localStorage.getItem("storageDate")),
           splitELem[0],
@@ -31,32 +31,36 @@ function getInfoDay(elem, keySwitch) {
 function daysInfo(elem, key) {     
   for (let i = 0; i < getInfoDay(elem, true).length; i++) {          
     let titleCell = document.createElement("div")
-    titleCell.setAttribute("class", "titleCell") 
-    titleCell.innerHTML = getInfoDay(elem, true)[i].title.substring(0, 15) 
-    titleCell.style.backgroundColor = getInfoDay(elem, true)[i].color      
-    elem.appendChild(titleCell) 
-    console.log("getInfoDay")
-    // let ert = getInfoDay(elem, true)[i].start.sort().join('.')
-    // let ter = getInfoDay(elem, true)[i].end
-    // console.log(ert)
-    // console.log(ter)
-    // console.log(getInfoDay(elem, true)[i].end)
-    // console.log(getInfoDay(elem, true)[i].start.join('.'))
-    // let temporaryVar = +getInfoDay(elem, true)[i].end[2] + 1
-    // let tem = getInfoDay(elem, true)[i].end.splice(2, 1, +getInfoDay(elem, true)[i].end[2] + 1)
-    // console.log("temporaryVar")
-    // console.log(tem)
+    titleCell.setAttribute("class", "titleCell")     
+    // titleCell.innerHTML = getInfoDay(elem, true)[i].title.substring(0, 15)  
+    // titleCell.style.backgroundColor = getInfoDay(elem, true)[i].color 
+    
+      titleCell.innerHTML = ( getInfoDay(elem, true)[i] == null ) ? 
+      titleCell.innerHTML = "" : getInfoDay(elem, true)[i].title.substring(0, 15) 
 
-    // let tem = getInfoDay(elem, true)[i].start[2].split(0, 1, )
-      // if(key){
-      //   // if (getInfoDay(elem, true)[i].start.join('.') < getInfoDay(elem, true)[i].end.join('.')) {
-      //     console.log( "Gerty")
-      //     titleCell.innerHTML = ""
-      //     titleCell.style.backgroundColor = "rgb(255, 255, 255)"
-      //   // }
-      // }
-      
-      if (i > 1) {
+      titleCell.style.backgroundColor = ( getInfoDay(elem, true)[i] == null ) ?
+    "rgb(255, 255, 255)" : getInfoDay(elem, true)[i].color
+
+    // titleCell.innerHTML = ( getInfoDay(elem, true)[i].title == null && getInfoDay(elem, true)[i].text == null ) ? 
+    // titleCell.innerHTML = "" : getInfoDay(elem, true)[i].title.substring(0, 15)      
+
+    // titleCell.style.backgroundColor = ( getInfoDay(elem, true)[i].title == null && getInfoDay(elem, true)[i].text == null ) ?
+    // "rgb(255, 255, 255)" : getInfoDay(elem, true)[i].color
+
+    elem.appendChild(titleCell)     
+    
+      if ( key == true) {
+        titleCell.innerHTML = ""
+        titleCell.style.backgroundColor = "rgb(255, 255, 255)"
+      }
+
+      if ( Number.isInteger(key) ) {
+        titleCell.setAttribute("class", "titleCellChanges") 
+        // titleCell.style.width = "360px"
+      }
+   
+
+      if (i > 2) {
         titleCell.innerHTML = '...'
         titleCell.style.backgroundColor = "tan" 
         titleCell.onclick = function() {
@@ -64,11 +68,15 @@ function daysInfo(elem, key) {
         }        
         return        
       }   
-      
+            
     titleCell.onclick = function() {       
-      console.log("getInfoDay(elem, true)[i]")            
-      console.log(getInfoDay(elem, true)[i])            
-        modalWindow(elem, getInfoDay(elem, true)[i], getInfoDay(elem, false), i)                           
+            
+      if ( getInfoDay( elem, true)[i] == null ) {
+        modalTaskList(elem, getInfoDay(elem, false), getInfoDay(elem, true))
+        return
+      }  
+
+      modalWindow(elem, getInfoDay(elem, true)[i], getInfoDay(elem, false), i)                                  
       }  
     }  
   } 
@@ -110,12 +118,14 @@ function daysInfo(elem, key) {
       cellTable.onclick = function (event) {      
         if (event.target == cellTable) {                
 
-          if (cellTable.contains(cellTable.querySelector('.titleCell')) == false) { 
+          if ( cellTable.contains(cellTable.querySelector('.titleCell')) == false ||
+          getInfoDay(cellTable, true)[cellTable.querySelectorAll('.titleCell').length - 1] == null ) { 
 
             return modalWindow(cellTable, "null", getInfoDay(cellTable, false))
 
           }  
-
+          // console.log(cellTable.querySelectorAll('.titleCell').length)
+          // console.log( getInfoDay(cellTable, true)[cellTable.querySelectorAll('.titleCell').length - 1] == null )
         modalTaskList( cellTable, getInfoDay(cellTable, false), getInfoDay(cellTable, true) )
 
         }

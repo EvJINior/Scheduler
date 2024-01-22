@@ -1,4 +1,5 @@
 // import content from './conteiner table.js'
+// localStorage.clear()
 
 const months = [
   "January",

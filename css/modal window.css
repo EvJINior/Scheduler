@@ -146,6 +146,15 @@
     background-color: tan;
 }
 
+.titleCellChanges {
+    position: relative;
+    width: 520px;
+    border: 1px rgb(255, 255, 255) solid;
+    font-size: 12px;
+    height: 20px;
+    background-color: tan;
+}
+
 .modalWindowList {
     background-color: rgba(0, 0, 0, 0.75);
     /* border: 3px rgb(26, 125, 149) solid; */
@@ -275,7 +284,10 @@
 
 }
 
-
+.inputUser {
+    width: 100%;
+    color: rgb(38, 137, 137);
+}
 
 
 
