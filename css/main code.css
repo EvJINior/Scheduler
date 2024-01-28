@@ -77,15 +77,28 @@ i.fa:active {
 }
 
 .content {
-    display: grid;
-    grid-gap: 2px;
-    justify-content: center;
-    width: 1100px;
+    display: flex;
+    flex-direction: column;
+    /* grid-gap: 2px; */
+    /* justify-content: center; */
+    /* width: 1100px; */
 }
 
 .monthView {
+    display: flex;
+    /* grid-gap: 2px; */
+    /* justify-content: center;
+    width: 1100px; */
+}
+
+.changeButton {
+    /* transform: translateX(-510px); */
+    transition: 1s;
+    display: grid;
+    width: 1100px;
     grid-template-columns: repeat(7, calc(calc(100% / 7) - 2px));
     grid-auto-rows: minmax(50px, 100px);
+
 }
 
 .cellTable {
@@ -99,6 +112,8 @@ i.fa:active {
 }
 
 .titleDaysWeek {
+    display: grid;
+    /* width: 1100px; */
     grid-template-columns: repeat(7, calc(calc(100% / 7) - 2px));
     grid-template-rows: 30px;
 }

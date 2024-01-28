@@ -167,11 +167,11 @@ function daysInfo(elem, key) {
 
   function startMonth(referenceDate, handlerNumbDay, content) {
     let titleDaysWeek = document.createElement("div")
-    titleDaysWeek.setAttribute("class", "titleDaysWeek content")
+    titleDaysWeek.setAttribute("class", "titleDaysWeek")
     content.appendChild(titleDaysWeek)
   
     let monthView = document.createElement("div")
-    monthView.setAttribute("class", "monthView content")
+    monthView.setAttribute("class", "monthView")
     content.appendChild(monthView)
   
     for (let j = 0; j < 7; j++) {
@@ -180,12 +180,16 @@ function daysInfo(elem, key) {
       daysWeek.innerHTML = nameDaysWeek[j]
       titleDaysWeek.appendChild(daysWeek)      
     }
+
+    let changeButton = document.createElement("div")
+    changeButton.setAttribute("class", "changeButton")
+    monthView.appendChild(changeButton)
   
     for (let i = 0; i < 42; i++) {
       let cellTable = document.createElement("div")
       cellTable.setAttribute("class", "cellTable")
       cellTable.setAttribute("type", "button")
-      monthView.appendChild(cellTable)
+      changeButton.appendChild(cellTable)
   
       let days = new Date(
         referenceDate.year,

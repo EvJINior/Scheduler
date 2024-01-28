@@ -51,56 +51,67 @@ function handlerMonth(Object, numbMonth, numbYear) {
 }
 
 function changesDate(object) { 
-  let getCellTable = content.querySelectorAll(".cellTable") 
+  let getMonthView = document.querySelector(".monthView")
+  let changeButton = document.createElement("div")
+    changeButton.setAttribute("class", "changeButton")
+    getMonthView.appendChild(changeButton)
   let getNavNameMonth = headerNav.querySelectorAll(".navNameMonth")
   
   for (let i = 0; i < 42; i++) {
+    let cellTable = document.createElement("div")
+      cellTable.setAttribute("class", "cellTable")
+      cellTable.setAttribute("type", "button")
+      changeButton.appendChild(cellTable)
+
     let days = new Date(
       object.year,
       object.month,
       i - handlerDayWeek(new Date(object.year, object.month, 1).getDay()) + 2
     )
-    getCellTable[i].innerHTML = handlerNumbDay(days.getDate(), days.getMonth())    
-    getCellTable[i].value = days.getFullYear() + "." + days.getMonth() + "." + addZero(days.getDate())
+    cellTable.innerHTML = handlerNumbDay(days.getDate(), days.getMonth())    
+    cellTable.value = days.getFullYear() + "." + days.getMonth() + "." + addZero(days.getDate())
     
-    daysInfo(getCellTable[i])    
+    daysInfo(cellTable)    
   }
   
   getNavNameMonth[0].innerHTML = object.year + " " + months[object.month]
 }
 
-// function changesDate (object) {
-//   let monthViewCopy = content.querySelector(".monthView")
+function animationChange (object) {
+  let monthViewCopy = content.querySelector(".monthView")
 
-//   let box = document.createElement("div")
-//   box.setAttribute("class", "box")
-//   box.setAttribute("type", "button")
-//   monthViewCopy.appendChild(box)
+  let changeButton = document.createElement("div")
+  changeButton.setAttribute("class", "changeButton")
+  changeButton.setAttribute("type", "button")
+  monthViewCopy.appendChild(changeButton)
       
-//   // let getCellTable = content.querySelectorAll(".cellTable") 
-//   let getNavNameMonth = headerNav.querySelectorAll(".navNameMonth")
+  // let getCellTable = content.querySelectorAll(".cellTable") 
+  let getNavNameMonth = headerNav.querySelectorAll(".navNameMonth")
+  document.querySelectorAll(".changeButton")[1].style.transition = "1s"
+  document.querySelectorAll(".changeButton")[1].style.transform = "translate(0px)"
+    // console.log("monthView3")
+    // console.log(monthViewCopy)
+  for (let i = 0; i < 42; i++) {
+    let cellTable = document.createElement("div")
+      cellTable.setAttribute("class", "cellTable")
+      cellTable.setAttribute("type", "button")
+      changeButton.appendChild(cellTable)
+    let days = new Date(
+      object.year,
+      object.month,
+      i - handlerDayWeek(new Date(object.year, object.month, 1).getDay()) + 2
+    )
+    cellTable.innerHTML = handlerNumbDay(days.getDate(), days.getMonth())
+    // getCellTable[i].innerHTML = handlerNumbDay(days.getDate(), days.getMonth())
+    cellTable.value = days.getFullYear() + "." + days.getMonth() + "." + addZero(days.getDate())
+
+    daysInfo(cellTable)    
+  }
+
+
   
-//     // console.log("monthView3")
-//     // console.log(monthViewCopy)
-//   for (let i = 0; i < 42; i++) {
-//     let cellTable = document.createElement("div")
-//       cellTable.setAttribute("class", "cellTable")
-//       cellTable.setAttribute("type", "button")
-//       box.appendChild(cellTable)
-//     let days = new Date(
-//       object.year,
-//       object.month,
-//       i - handlerDayWeek(new Date(object.year, object.month, 1).getDay()) + 2
-//     )
-//     cellTable.innerHTML = handlerNumbDay(days.getDate(), days.getMonth())
-//     // getCellTable[i].innerHTML = handlerNumbDay(days.getDate(), days.getMonth())
-//     cellTable.value = days.getFullYear() + "." + days.getMonth() + "." + addZero(days.getDate())
-    
-//     daysInfo(cellTable)    
-//   }
-  
-//   getNavNameMonth[0].innerHTML = object.year + " " + months[object.month]
-// }
+  getNavNameMonth[0].innerHTML = object.year + " " + months[object.month]
+}
 
 
 // ???????????????????????????????????????????????????????????????????????????????????
@@ -124,7 +135,7 @@ function highlightToday(elem) {
   let date = referenceDate.year + "." + referenceDate.month + "." + addZero(new Date().getDate())
   for (let i = 0; i < elem.length; i++) {
     if (elem[i].value == date) {
-      console.log(elem[i])
+      // console.log(elem[i])
       elem[i].style.border = "6px rgb(26, 125, 149) solid"
       setTimeout(
         () => (elem[i].style.border = "1px rgb(26, 125, 149) solid"),
@@ -198,9 +209,18 @@ headerNav.appendChild(navYear)
 // numbMonth.innerHTML = Months[referenceDate.month]
 // head.appendChild(numbMonth)
 
-function animationChange (  ) {
+// function animationChange (  ) {
 
-}
+// }
+
+// function countStyle ( numbTranslate, styleTransform) {
+//   for ( let numbTranslate = 0; numbTranslate < 100; numbTranslate++) {
+//     styleTransform = "translate" + "(" + "-" + numbTranslate + "px" + ")",
+//     console.log("styleTransform"),
+//     console.log(styleTransform)
+//   }   
+//   return styleTransform
+// }
 
 ChangeRight.onclick = function () {
   if (content.contains(document.querySelector(".cellMonth")) == true) {
@@ -209,8 +229,52 @@ ChangeRight.onclick = function () {
     return
     // numbMonth.innerHTML = referenceDate.year
   }
+  
     handlerMonth(referenceDate, (referenceDate.month += 1), referenceDate.year)
-    changesDate(referenceDate)
+
+    // animationChange(referenceDate)
+    // let numbTranslate = 0
+    // let styleTransform
+    // let timeInter = setInterval(() => 
+        // countStyle ( numbTranslate, styleTransform),
+        // numbTranslate = numbTranslate + 1,
+        // styleTransform = "translate" + "(" + numbTranslate + "px" + ")",
+        // console.log("styleTransform"),
+        // console.log(styleTransform),
+
+        // document.querySelector(".changeButton").style.transition = "10s",
+        
+        
+        document.querySelector(".changeButton").style.transform = "translate(-1100px)"        
+        
+        animationChange(referenceDate)
+
+        setTimeout(() => document.querySelectorAll(".changeButton")[1].style.transform = "translate(-1100px)",
+         10)
+
+         setTimeout(() => document.querySelectorAll(".changeButton")[1].remove(),
+        //  document.querySelectorAll(".changeButton")[1].remove(),
+        //  document.querySelectorAll(".changeButton")[0].style.transform = "translate(0px)",
+         800)
+      
+         setTimeout(() => document.querySelectorAll(".changeButton")[0].remove(),
+        //  document.querySelectorAll(".changeButton")[1].remove(),
+        //  document.querySelectorAll(".changeButton")[0].style.transform = "translate(0px)",
+         800)
+         
+         setTimeout(() => changesDate(referenceDate),
+         //  document.querySelectorAll(".changeButton")[1].remove(),
+         //  document.querySelectorAll(".changeButton")[0].style.transform = "translate(0px)",
+          800)
+        
+        
+         
+    // document.querySelector(".changeButton").style.transform = "translate(-1100px)",
+    // animationChange(referenceDate)
+    
+    
+    // { clearInterval(timerId); alert('stop'); }, 10000)
+    
     // startAnimation(referenceDate, handlerNumbDay, content)
 
     // numbMonth.innerHTML = Months[referenceDate.month]       
