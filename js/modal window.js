@@ -401,7 +401,16 @@ function modalTaskList(cellTable, splitELem, dayInfo) {
       continue
     } 
    
-    bodyTitleEntry.innerHTML = dayInfo[i].title.substring(0, 46) 
+    let differenceBetweenDatesInDays = ( (conversionDate (dayInfo[i].endRange) -
+    conversionDate (dayInfo[i].startRange)) / (1000 * 60 * 60 * 24) ) + 1
+
+    let dayNumbThisTitle = ( ( conversionDate ( splitELem ) -
+    conversionDate ( dayInfo[i].startRange) ) / (1000 * 60 * 60 * 24) ) + 1
+
+    bodyTitleEntry.innerHTML = ( dayInfo[i].startRange.toString() != dayInfo[i].endRange.toString() ) ? 
+    dayInfo[i].title.substring(0, 32) + " (" + "Day " + dayNumbThisTitle + " of " + differenceBetweenDatesInDays + ")" :
+    dayInfo[i].title.substring(0, 46) 
+
     bodyTitleEntry.style.outlineColor = dayInfo[i].color       
     bodyTitleEntry.style.backgroundColor = dayInfo[i].color
 
@@ -648,10 +657,7 @@ function displayDate (elemRangeDate, splitELem, elemCell, key) {
     return false
   }
 
-  function conversionDate (valueDate) {  
-    let conversion = new Date(valueDate[0], valueDate[1], valueDate[2])      
-    return conversion
-  } 
+  
 
   function changeDate (valueDate, key) { 
         
@@ -966,7 +972,7 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
 
 //////////////////////////////////////////
 
-      const getDateAboutDay = searchStorage(
+      const getDateAboutDay = searchStorage (
         JSON.parse(localStorage.getItem("storageDate")),
         temporaryStorage.startRangeDateDisplay[0],
         temporaryStorage.startRangeDateDisplay[1],
@@ -1066,10 +1072,7 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
           removeTitle ( getDayCellTable ( temporaryStorage.date ) )
           daysInfo ( getDayCellTable ( temporaryStorage.date ), true )  
         }      
-        
-        
-
-        
+                       
       }
       return modalWindow.remove()
     }

@@ -14,6 +14,15 @@ function searchStorage(getObject, fragmentYear, fragmentMonth, fragmentDay) {
   return getObject[fragmentYear][fragmentMonth][fragmentDay]
 }
 
+function conversionDate (valueDate) {  
+    let conversion = new Date(valueDate[0], valueDate[1], valueDate[2])      
+    return conversion
+  } 
+
+
+
+
+
 function getInfoDay(elem, keySwitch) {
   const splitELem = elem.value.split(".")
   if ( keySwitch ) {
@@ -39,26 +48,33 @@ function daysInfo(elem, key) {
       titleCell.innerHTML = "" : getInfoDay(elem, true)[i].title.substring(0, 15) 
 
       titleCell.style.backgroundColor = ( getInfoDay(elem, true)[i] == null ) ?
-    "rgb(255, 255, 255)" : getInfoDay(elem, true)[i].color
-
-    // titleCell.innerHTML = ( getInfoDay(elem, true)[i].title == null && getInfoDay(elem, true)[i].text == null ) ? 
-    // titleCell.innerHTML = "" : getInfoDay(elem, true)[i].title.substring(0, 15)      
-
-    // titleCell.style.backgroundColor = ( getInfoDay(elem, true)[i].title == null && getInfoDay(elem, true)[i].text == null ) ?
-    // "rgb(255, 255, 255)" : getInfoDay(elem, true)[i].color
+    "rgb(255, 255, 255)" : getInfoDay(elem, true)[i].color 
 
     elem.appendChild(titleCell)     
-    
-      if ( key == true) {
-        titleCell.innerHTML = ""
-        titleCell.style.backgroundColor = "rgb(255, 255, 255)"
-      }
 
-      if ( Number.isInteger(key) ) {
-        titleCell.setAttribute("class", "titleCellChanges") 
-        // titleCell.style.width = "360px"
-      }
-   
+    // function handlerTitle ( titleCell,  ) { 
+      const getTitle = getInfoDay(elem, true)[i]
+      // if ( getTitle.startRange)
+      // console.log("getTitle")
+      //   console.log(getInfoDay(elem))
+
+      // let sadf = document.querySelectorAll(".cellTable")[1]
+      // let getStyle = window.getComputedStyle(sadf).width.slice( 0 , -2)
+      
+      
+      // let widthStyle = getStyle
+      // console.log("sadf")
+      // console.log( getStyle )
+
+      titleCell.onclick = function() {                   
+        if ( getInfoDay( elem, true )[i] == null ) {
+
+          modalTaskList(elem, getInfoDay(elem, false), getInfoDay(elem, true))
+          return
+        }  
+  
+        modalWindow(elem, getInfoDay(elem, true)[i], getInfoDay(elem, false), i)                                  
+        }
 
       if (i > 2) {
         titleCell.innerHTML = '...'
@@ -67,17 +83,85 @@ function daysInfo(elem, key) {
           modalTaskList(elem, getInfoDay(elem, false), getInfoDay(elem, true))
         }        
         return        
-      }   
-            
-    titleCell.onclick = function() {       
-            
-      if ( getInfoDay( elem, true)[i] == null ) {
-        modalTaskList(elem, getInfoDay(elem, false), getInfoDay(elem, true))
-        return
-      }  
+      } 
 
-      modalWindow(elem, getInfoDay(elem, true)[i], getInfoDay(elem, false), i)                                  
-      }  
+      
+
+      if ( getTitle != null && getTitle.startRange.toString() != getTitle.endRange.toString() ) {
+        let differenceBetweenDates = (conversionDate (getTitle.endRange) - 
+          conversionDate (getTitle.startRange)) / (1000 * 60 * 60 * 24)
+          let widthElemTitle = 157
+          let widthStyleTitle = widthElemTitle * differenceBetweenDates + 120
+          let findDayWeek = 7 - handlerDayWeek( conversionDate ( getTitle.startRange ).getDay() )                         
+
+        if ( conversionDate ( elem.value.split ( "." ) ).getDay() == 0 && getTitle.startRange.toString() == getInfoDay(elem).toString()) {
+          titleCell.style.position = "relative"
+          titleCell.style.width = widthElemTitle + "px"
+          continue
+        }
+
+        if ( getTitle.startRange.toString() == getInfoDay(elem).toString() ) {   
+               
+          if ( findDayWeek < differenceBetweenDates ) {
+            widthStyleTitle = widthElemTitle * findDayWeek + 120
+            titleCell.style.position = "relative"
+            titleCell.style.width = widthStyleTitle + "px"
+            continue
+          }          
+                  
+          titleCell.style.position = "relative"
+          titleCell.style.width = widthStyleTitle + "px"
+          continue
+        }        
+
+         
+          
+        if ( conversionDate ( elem.value.split ( "." ) ).getDay() == 1 ) { 
+          if ( conversionDate ( getTitle.startRange ) < conversionDate ( elem.value.split ( "." ) ) ) {            
+            widthStyleTitle = ( differenceBetweenDates - findDayWeek - 1 ) * widthElemTitle + 120
+            titleCell.style.position = "relative"
+            titleCell.style.width = widthStyleTitle + "px"
+            continue
+          }  
+          titleCell.style.position = "relative"
+          titleCell.style.width = widthStyleTitle + "px"
+          continue
+        }
+    
+        titleCell.innerHTML = ""
+        titleCell.style.backgroundColor = "rgb(255, 255, 255)"
+      }
+      
+
+    // }
+
+    // handlerTitle (  )
+
+    
+      // if ( key == true) {
+      //   titleCell.innerHTML = ""
+      //   titleCell.style.backgroundColor = "rgb(255, 255, 255)"
+      // }
+      //   // let sadf = document.querySelector(".monthView")
+      //   // let getStyle = window.getComputedStyle(sadf)
+      //   // // let widthStyle = getStyle
+      //   // console.log("sadf")
+      //   // console.log( getStyle )
+      // if ( Number.isInteger(key) ) {        
+      //   let widthTitle = 152.7 * key + 120
+      //   titleCell.setAttribute("class", "titleCellChanges") 
+      //   console.log("key")
+      //   console.log( widthTitle )
+        
+      //   // titleCell.style.position = "relative"
+      //   titleCell.style.width = widthTitle + "px"
+      //   // titleCell.style.width = "360px"
+      // }
+   
+
+        
+            
+      
     }  
   } 
 
@@ -109,9 +193,12 @@ function daysInfo(elem, key) {
         i - handlerDayWeek(new Date(referenceDate.year, referenceDate.month, 1).getDay()) + 2
         )
       cellTable.innerHTML = handlerNumbDay(days.getDate(), days.getMonth())
-      cellTable.value = days.getFullYear() + "." + days.getMonth() + "." + addZero(days.getDate())    
-      // console.log("days")
-      // console.log(days)
+      cellTable.value = days.getFullYear() + "." + days.getMonth() + "." + addZero(days.getDate())   
+
+      // console.log("days " + i)
+      // let fff = document.querySelectorAll(".cellTable")[i]
+      // console.log(fff)
+      // console.log(fff.querySelectorAll(".titleCell"))
 
       daysInfo(cellTable)
       

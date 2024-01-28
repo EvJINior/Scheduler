@@ -148,7 +148,7 @@
 
 .titleCellChanges {
     position: relative;
-    width: 520px;
+    /* width: 520px; */
     border: 1px rgb(255, 255, 255) solid;
     font-size: 12px;
     height: 20px;
