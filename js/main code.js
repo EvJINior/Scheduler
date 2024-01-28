@@ -278,30 +278,30 @@ startMonth(referenceDate, handlerNumbDay, content)
 
 
 
-// function startAnimation(referenceDate, handlerNumbDay, content) { 
-//   let monthView = document.createElement("div")
-//   monthView.setAttribute("class", "monthView content")
-//   content.appendChild(monthView)  
+function startAnimation(referenceDate, handlerNumbDay, content) { 
+  let monthView = document.createElement("div")
+  monthView.setAttribute("class", "monthView content")
+  content.appendChild(monthView)  
 
-//   for (let i = 0; i < 42; i++) {
-//     let cellTable = document.createElement("div")
-//     cellTable.setAttribute("class", "cellTable")
-//     cellTable.setAttribute("type", "button")
-//     monthView.appendChild(cellTable)
+  for (let i = 0; i < 42; i++) {
+    let cellTable = document.createElement("div")
+    cellTable.setAttribute("class", "cellTable")
+    cellTable.setAttribute("type", "button")
+    monthView.appendChild(cellTable)
 
-//     let days = new Date(
-//       referenceDate.year,
-//       referenceDate.month,
-//       i - handlerDayWeek(new Date(referenceDate.year, referenceDate.month, 1).getDay()) + 2
-//       )
-//     cellTable.innerHTML = handlerNumbDay(days.getDate(), days.getMonth())
-//     cellTable.value = days.getFullYear() + "." + days.getMonth() + "." + addZero(days.getDate())   
+    let days = new Date(
+      referenceDate.year,
+      referenceDate.month,
+      i - handlerDayWeek(new Date(referenceDate.year, referenceDate.month, 1).getDay()) + 2
+      )
+    cellTable.innerHTML = handlerNumbDay(days.getDate(), days.getMonth())
+    cellTable.value = days.getFullYear() + "." + days.getMonth() + "." + addZero(days.getDate())   
 
-//     // console.log("days " + i)
-//     // let fff = document.querySelectorAll(".cellTable")[i]
-//     // console.log(fff)
-//     // console.log(fff.querySelectorAll(".titleCell"))
+    // console.log("days " + i)
+    // let fff = document.querySelectorAll(".cellTable")[i]
+    // console.log(fff)
+    // console.log(fff.querySelectorAll(".titleCell"))
 
-//     daysInfo(cellTable)    
-//   }
-// }
+    daysInfo(cellTable)    
+  }
+}
