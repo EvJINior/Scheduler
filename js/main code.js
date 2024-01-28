@@ -50,57 +50,57 @@ function handlerMonth(Object, numbMonth, numbYear) {
   else return Object.month, Object.year
 }
 
-// function changesDate(object) { 
-//   let getCellTable = content.querySelectorAll(".cellTable") 
-//   let getNavNameMonth = headerNav.querySelectorAll(".navNameMonth")
-  
-//   for (let i = 0; i < 42; i++) {
-//     let days = new Date(
-//       object.year,
-//       object.month,
-//       i - handlerDayWeek(new Date(object.year, object.month, 1).getDay()) + 2
-//     )
-//     getCellTable[i].innerHTML = handlerNumbDay(days.getDate(), days.getMonth())    
-//     getCellTable[i].value = days.getFullYear() + "." + days.getMonth() + "." + addZero(days.getDate())
-    
-//     daysInfo(getCellTable[i])    
-//   }
-  
-//   getNavNameMonth[0].innerHTML = object.year + " " + months[object.month]
-// }
-
-function changesDate (object) {
-  let monthViewCopy = content.querySelector(".monthView")
-
-  let box = document.createElement("div")
-  box.setAttribute("class", "box")
-  box.setAttribute("type", "button")
-  monthViewCopy.appendChild(box)
-      
-  // let getCellTable = content.querySelectorAll(".cellTable") 
+function changesDate(object) { 
+  let getCellTable = content.querySelectorAll(".cellTable") 
   let getNavNameMonth = headerNav.querySelectorAll(".navNameMonth")
   
-    // console.log("monthView3")
-    // console.log(monthViewCopy)
   for (let i = 0; i < 42; i++) {
-    let cellTable = document.createElement("div")
-      cellTable.setAttribute("class", "cellTable")
-      cellTable.setAttribute("type", "button")
-      box.appendChild(cellTable)
     let days = new Date(
       object.year,
       object.month,
       i - handlerDayWeek(new Date(object.year, object.month, 1).getDay()) + 2
     )
-    cellTable.innerHTML = handlerNumbDay(days.getDate(), days.getMonth())
-    // getCellTable[i].innerHTML = handlerNumbDay(days.getDate(), days.getMonth())
-    cellTable.value = days.getFullYear() + "." + days.getMonth() + "." + addZero(days.getDate())
+    getCellTable[i].innerHTML = handlerNumbDay(days.getDate(), days.getMonth())    
+    getCellTable[i].value = days.getFullYear() + "." + days.getMonth() + "." + addZero(days.getDate())
     
-    daysInfo(cellTable)    
+    daysInfo(getCellTable[i])    
   }
   
   getNavNameMonth[0].innerHTML = object.year + " " + months[object.month]
 }
+
+// function changesDate (object) {
+//   let monthViewCopy = content.querySelector(".monthView")
+
+//   let box = document.createElement("div")
+//   box.setAttribute("class", "box")
+//   box.setAttribute("type", "button")
+//   monthViewCopy.appendChild(box)
+      
+//   // let getCellTable = content.querySelectorAll(".cellTable") 
+//   let getNavNameMonth = headerNav.querySelectorAll(".navNameMonth")
+  
+//     // console.log("monthView3")
+//     // console.log(monthViewCopy)
+//   for (let i = 0; i < 42; i++) {
+//     let cellTable = document.createElement("div")
+//       cellTable.setAttribute("class", "cellTable")
+//       cellTable.setAttribute("type", "button")
+//       box.appendChild(cellTable)
+//     let days = new Date(
+//       object.year,
+//       object.month,
+//       i - handlerDayWeek(new Date(object.year, object.month, 1).getDay()) + 2
+//     )
+//     cellTable.innerHTML = handlerNumbDay(days.getDate(), days.getMonth())
+//     // getCellTable[i].innerHTML = handlerNumbDay(days.getDate(), days.getMonth())
+//     cellTable.value = days.getFullYear() + "." + days.getMonth() + "." + addZero(days.getDate())
+    
+//     daysInfo(cellTable)    
+//   }
+  
+//   getNavNameMonth[0].innerHTML = object.year + " " + months[object.month]
+// }
 
 
 // ???????????????????????????????????????????????????????????????????????????????????
@@ -278,30 +278,30 @@ startMonth(referenceDate, handlerNumbDay, content)
 
 
 
-function startAnimation(referenceDate, handlerNumbDay, content) { 
-  let monthView = document.createElement("div")
-  monthView.setAttribute("class", "monthView content")
-  content.appendChild(monthView)  
+// function startAnimation(referenceDate, handlerNumbDay, content) { 
+//   let monthView = document.createElement("div")
+//   monthView.setAttribute("class", "monthView content")
+//   content.appendChild(monthView)  
 
-  for (let i = 0; i < 42; i++) {
-    let cellTable = document.createElement("div")
-    cellTable.setAttribute("class", "cellTable")
-    cellTable.setAttribute("type", "button")
-    monthView.appendChild(cellTable)
+//   for (let i = 0; i < 42; i++) {
+//     let cellTable = document.createElement("div")
+//     cellTable.setAttribute("class", "cellTable")
+//     cellTable.setAttribute("type", "button")
+//     monthView.appendChild(cellTable)
 
-    let days = new Date(
-      referenceDate.year,
-      referenceDate.month,
-      i - handlerDayWeek(new Date(referenceDate.year, referenceDate.month, 1).getDay()) + 2
-      )
-    cellTable.innerHTML = handlerNumbDay(days.getDate(), days.getMonth())
-    cellTable.value = days.getFullYear() + "." + days.getMonth() + "." + addZero(days.getDate())   
+//     let days = new Date(
+//       referenceDate.year,
+//       referenceDate.month,
+//       i - handlerDayWeek(new Date(referenceDate.year, referenceDate.month, 1).getDay()) + 2
+//       )
+//     cellTable.innerHTML = handlerNumbDay(days.getDate(), days.getMonth())
+//     cellTable.value = days.getFullYear() + "." + days.getMonth() + "." + addZero(days.getDate())   
 
-    // console.log("days " + i)
-    // let fff = document.querySelectorAll(".cellTable")[i]
-    // console.log(fff)
-    // console.log(fff.querySelectorAll(".titleCell"))
+//     // console.log("days " + i)
+//     // let fff = document.querySelectorAll(".cellTable")[i]
+//     // console.log(fff)
+//     // console.log(fff.querySelectorAll(".titleCell"))
 
-    daysInfo(cellTable)    
-  }
-}
+//     daysInfo(cellTable)    
+//   }
+// }
