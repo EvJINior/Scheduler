@@ -25,7 +25,7 @@ const nameDaysWeek = [
   "Saturday",
   "Sunday",
 ]
-
+startMonth
 function addZero (elem) {
   if (elem < 10 && elem[0] != 0) {    
     return elem = "0" + elem
@@ -198,9 +198,9 @@ headerNav.appendChild(navYear)
 // numbMonth.innerHTML = Months[referenceDate.month]
 // head.appendChild(numbMonth)
 
-function animationChange (  ) {
+// function animationChange (  ) {
 
-}
+// }
 
 ChangeRight.onclick = function () {
   if (content.contains(document.querySelector(".cellMonth")) == true) {
@@ -237,7 +237,7 @@ ChangeLeft.onclick = function () {
 navToday.onclick = function () {
   if (content.contains(document.querySelector(".cellTable")) == false) {
     content.querySelector(".yearView").remove()
-    startMonth(referenceDate, handlerNumbDay, content)        
+    startMonth(referenceDate, content)        
   }
 
   referenceDate.month = new Date().getMonth()
@@ -267,7 +267,7 @@ let content = document.createElement("div")
 content.setAttribute("class", "content")
 container.appendChild(content)
 
-startMonth(referenceDate, handlerNumbDay, content)
+startMonth(referenceDate, content)
 
 // let weeks = document.createElement("div")
 // weeks.setAttribute("class", "weeks")

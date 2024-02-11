@@ -85,7 +85,7 @@ i.fa:active {
 
 .monthView {
     grid-template-columns: repeat(7, calc(calc(100% / 7) - 2px));
-    grid-auto-rows: minmax(50px, 100px);
+    grid-auto-rows: minmax(50px, 150px);
 }
 
 .cellTable {

@@ -76,7 +76,7 @@ function daysInfo(elem, key) {
         modalWindow(elem, getInfoDay(elem, true)[i], getInfoDay(elem, false), i)                                  
         }
 
-      if (i > 2) {
+      if (i > 4) {
         titleCell.innerHTML = '...'
         titleCell.style.backgroundColor = "tan" 
         titleCell.onclick = function() {
@@ -165,7 +165,7 @@ function daysInfo(elem, key) {
     }  
   } 
 
-  function startMonth(referenceDate, handlerNumbDay, content) {
+  function startMonth(referenceDate, content) {
     let titleDaysWeek = document.createElement("div")
     titleDaysWeek.setAttribute("class", "titleDaysWeek content")
     content.appendChild(titleDaysWeek)
