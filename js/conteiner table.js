@@ -76,7 +76,7 @@ function daysInfo(elem, key) {
         modalWindow(elem, getInfoDay(elem, true)[i], getInfoDay(elem, false), i)                                  
         }
 
-      if (i > 4) {
+      if (i > 5) {
         titleCell.innerHTML = '...'
         titleCell.style.backgroundColor = "tan" 
         titleCell.onclick = function() {
