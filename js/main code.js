@@ -25,7 +25,7 @@ const nameDaysWeek = [
   "Saturday",
   "Sunday",
 ]
-startMonth
+// startMonth
 function addZero (elem) {
   if (elem < 10 && elem[0] != 0) {    
     return elem = "0" + elem

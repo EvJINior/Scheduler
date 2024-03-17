@@ -91,6 +91,97 @@ function elemForDel ( temporaryStorage, startOrEndRange ) { // Проверяе�
   return false
 }
 
+function comparesPositionTitleWithPreviousDay (today, separatedDate, index, key) {
+  let conversSeparDate = new Date(separatedDate[0], separatedDate[1], +separatedDate[2] - 1)
+  let previousSeparDay = [conversSeparDate.getFullYear().toString(), conversSeparDate.getMonth().toString(), addZero (conversSeparDate.getDate().toString())]
+
+  const getPreviousSeparDay = searchStorage(
+    JSON.parse(localStorage.getItem("storageDate")),
+    previousSeparDay[0],
+    previousSeparDay[1],
+    previousSeparDay[2]
+  )          
+
+  if ( key === 'complianceCheck' && today[index] != null ) {
+    for ( let i = index; i < getPreviousSeparDay.length; i++ ) {
+      if ( getPreviousSeparDay[i].countSubsequence === today[index].countSubsequence && 
+        getPreviousSeparDay[i].startRange.toString() === today[index].startRange.toString() &&
+        getPreviousSeparDay[i].endRange.toString() === today[index].endRange.toString()) { 
+          if ( i != index )
+          return true
+      }
+    }  
+  return false  
+  }
+
+  // conversionDate ( today[i].startRange ) < conversionDate ( separatedDate ) 
+  for ( let i = index + 1; i < getPreviousSeparDay.length; i++) {
+    if ( getPreviousSeparDay[i] != null && conversionDate ( getPreviousSeparDay[i].endRange ) > conversSeparDate ) {
+      for ( let j = index; j < today.length; j++ ) {    
+        if ( today[j] != null && getPreviousSeparDay[i].countSubsequence === today[j].countSubsequence && 
+          getPreviousSeparDay[i].startRange.toString() === today[j].startRange.toString() &&
+          getPreviousSeparDay[i].endRange.toString() === today[j].endRange.toString()) {
+            if ( i != j ) {
+              return false
+            }
+          }              
+        }
+
+  return true            
+    }
+  }  
+}
+
+function checksWhetherDeletePositionNumberDeletedNoteFollowingDays ( elemTemporaryStorage, numberCount ) {
+  const checkBiggestEndrange = searchStorage(
+    JSON.parse(localStorage.getItem("storageDate")),
+    elemTemporaryStorage[0],
+    elemTemporaryStorage[1],
+    elemTemporaryStorage[2]
+  )  
+
+  const biggestEndrange = conversionDate ( elemTemporaryStorage ) 
+
+  let getNextDay = elemTemporaryStorage  
+  
+  for ( let i = numberCount + 1; i < checkBiggestEndrange.length; i++) {
+
+    if ( checkBiggestEndrange[i] != null) {
+
+      // if (  ) {}
+
+      if ( biggestEndrange < conversionDate ( checkBiggestEndrange[i].endRange ) ) {           
+
+        let differenceBetweenDatesInDays = 
+        ( conversionDate ( checkBiggestEndrange[i].endRange ) - biggestEndrange ) /
+        ( 1000 * 60 * 60 * 24 )
+
+        for ( let j = 0; j < differenceBetweenDatesInDays; j++ ) {
+          getNextDay = changeDate (getNextDay, true)
+
+          const getNumberCount = searchStorage(
+            JSON.parse(localStorage.getItem("storageDate")),
+            getNextDay[0],
+            getNextDay[1],
+            getNextDay[2]
+          ) 
+
+          if (getNumberCount[numberCount] != null) {
+            return false
+          }
+        }
+
+        return checksWhetherDeletePositionNumberDeletedNoteFollowingDays ( checkBiggestEndrange[i].endRange, numberCount )
+      }     
+      
+      
+
+    }      
+  }   
+
+  return true
+}
+
 // function chooseElemForReplacement ( temporaryStorage, startOrEndRange ) {
 //   const getTitlesRangeDay = searchStorage (
 //     JSON.parse(localStorage.getItem("storageDate")),
@@ -215,20 +306,22 @@ function saveINStorageDate( dataYYMMdd, storageDate, differenceBetweenDates, cou
             // 3 аргумент подумать как это сделать 
           // ????????????? доработать
 
-          if ( elemForDel ( temporaryStorage, temporaryStorage.startRangeDateDisplay ) && 
-          elemForDel ( temporaryStorage, temporaryStorage.endRangeDateDisplay ) ) {              
-              for ( let i = 0; i <= differenceBetweenDates + additionalDays; i++) {
-                storageDate[dataYYMMdd[index]].splice( countOccupiedPosition, 1 )
-                dataYYMMdd = changeDate ( dataYYMMdd, true )                           
-              }
-              console.log("elemsForDel")
-              console.log(temporaryStorage) 
-              return storageDate
-            }
-
+          // if ( elemForDel ( temporaryStorage, temporaryStorage.startRangeDateDisplay ) && 
+          // elemForDel ( temporaryStorage, temporaryStorage.endRangeDateDisplay ) ) {                      
+          //     // for ( let i = 0; i <= differenceBetweenDates + additionalDays; i++) {
+          //     for ( let i = 0; i <= differenceBetweenDates; i++) {
+          //       storageDate[dataYYMMdd[index]].splice( countOccupiedPosition, 1 )
+          //       dataYYMMdd = changeDate ( dataYYMMdd, true )                           
+          //     }
+          //     console.log("elemsForDel")
+          //     console.log(temporaryStorage) 
+          //     return storageDate
+          //   }
+          
             if ( ckeckElemBeforeDel ( temporaryStorage, temporaryStorage.startRangeDateDisplay ) && 
             ckeckElemBeforeDel ( temporaryStorage, temporaryStorage.endRangeDateDisplay ) ) {              
-              for ( let i = 0; i <= differenceBetweenDates + additionalDays; i++) {
+              // for ( let i = 0; i <= differenceBetweenDates + additionalDays; i++) {
+              for ( let i = 0; i <= differenceBetweenDates; i++) {
                 storageDate[dataYYMMdd[index]].splice( countOccupiedPosition, 1 )
                 dataYYMMdd = changeDate ( dataYYMMdd, true )                         
               }
@@ -237,23 +330,47 @@ function saveINStorageDate( dataYYMMdd, storageDate, differenceBetweenDates, cou
               return storageDate
             }
 
-            if ( getLas ( temporaryStorage.endRangeDateDisplay, temporaryStorage.endRangeDateDisplay,
-              getNumbTitle ( temporaryStorage ) ) === true ) {
-
-                for ( let i = 0; i <= differenceBetweenDates + additionalDays; i++) {
-                  console.log( "stor" )
-                  console.log( storageDate[dataYYMMdd[index]] )
-                  // storageDate[dataYYMMdd[index]].splice( countOccupiedPosition, 1 )
-                  dataYYMMdd = changeDate ( dataYYMMdd, true )
-                }
-                console.log( "getLas" )
-                return storageDate
+            // if ( checksWhetherDeletePositionNumberDeletedNoteFollowingDays ( temporaryStorage.endRangeDateDisplay, countOccupiedPosition ) ) {
+            if ( checksWhetherDeletePositionNumberDeletedNoteFollowingDays ( temporaryStorage.endRangeDateDisplay, countOccupiedPosition ) 
+            && ckeckElemBeforeDel ( temporaryStorage, temporaryStorage.startRangeDateDisplay )) {
+              for ( let i = 0; i <= differenceBetweenDates + additionalDays; i++) {
+                storageDate[dataYYMMdd[index]].splice( countOccupiedPosition, 1 )
+                dataYYMMdd = changeDate ( dataYYMMdd, true )                         
               }
+              console.log("checksWhetherDeletePositionNumberDeletedNoteFollowingDays")
+              console.log(temporaryStorage)   
+              return storageDate
+            }
 
             for ( let i = 0; i <= differenceBetweenDates; i++) {
-            storageDate[dataYYMMdd[index]].splice( countOccupiedPosition, 1 )
-            dataYYMMdd = changeDate ( dataYYMMdd, true )
+              storageDate[dataYYMMdd[index]].splice( countOccupiedPosition, 1, null )
+              dataYYMMdd = changeDate ( dataYYMMdd, true )                         
             }
+            console.log("end")
+            console.log(temporaryStorage)   
+            return storageDate
+
+            // if ( getLas ( temporaryStorage.endRangeDateDisplay, temporaryStorage.endRangeDateDisplay,
+            //   getNumbTitle ( temporaryStorage ) ) === true ) {
+
+            //     for ( let i = 0; i <= differenceBetweenDates + additionalDays; i++) {
+            //       console.log( "stor" )
+            //       console.log( storageDate[dataYYMMdd[index]] )
+            //       // storageDate[dataYYMMdd[index]].splice( countOccupiedPosition, 1 )
+            //       dataYYMMdd = changeDate ( dataYYMMdd, true )
+            //     }
+            //     console.log( "getLas" )
+            //     return storageDate
+            //   }
+
+            // for ( let i = 0; i <= differenceBetweenDates; i++) {
+            // storageDate[dataYYMMdd[index]].splice( countOccupiedPosition, 1 )
+            // dataYYMMdd = changeDate ( dataYYMMdd, true )
+            // }
+
+
+
+
             // console.log( getNumbTitle ( temporaryStorage ) )
 
             // console.log ( getLas ( temporaryStorage.endRangeDateDisplay, temporaryStorage.endRangeDateDisplay,
@@ -278,7 +395,7 @@ function saveINStorageDate( dataYYMMdd, storageDate, differenceBetweenDates, cou
             //   dataYYMMdd = changeDate ( dataYYMMdd, true )  
             // }
             
-            return storageDate
+            // return storageDate
           }
           
             for ( let i = 0; i <= differenceBetweenDates; i++) {
@@ -287,10 +404,22 @@ function saveINStorageDate( dataYYMMdd, storageDate, differenceBetweenDates, cou
 
                 return storageDate
               }
+              
+              const getDateAboutDay = searchStorage(
+                JSON.parse(localStorage.getItem("storageDate")),
+                dataYYMMdd[0],
+                dataYYMMdd[1],
+                dataYYMMdd[2]
+              )      
 
+              comparesPositionTitleWithPreviousDay (getDateAboutDay, dataYYMMdd, positionOriginalElemForDelete) ? 
+              storageDate[dataYYMMdd[index]][countOccupiedPosition] = copeDateForMoving :               
               storageDate[dataYYMMdd[index]].splice( countOccupiedPosition, 0, copeDateForMoving )
 
+              // storageDate[dataYYMMdd[index]].splice( countOccupiedPosition, 0, copeDateForMoving )
+              // if ( comparesPositionTitleWithPreviousDay (today, separatedDate, index) ) {
               storageDate[dataYYMMdd[index]][positionOriginalElemForDelete] = null 
+              // }
               dataYYMMdd = changeDate ( dataYYMMdd, true )
             }
 
@@ -408,6 +537,9 @@ function handlerStorage(separatedDate, storageDate, separatedObjTitle, separated
         // if ( startRange.toString() !== endRange.toString() ) { 
 
         // }
+        console.log("indexTitle")
+        console.log(baseObj)
+        console.log("indexTitle")
         storageDate[separatedDate[index]][indexTitle] = baseObj      
                                
         return storageDate
@@ -441,34 +573,7 @@ function handlerStorage(separatedDate, storageDate, separatedObjTitle, separated
           baseObj.startRange[2]
         )     
 ////////////////////////
-        function comparesPositionTitleWithPreviousDay (today, separatedDate, index) {
-          let conversSeparDate = new Date(separatedDate[0], separatedDate[1], +separatedDate[2] - 1)
-          let previousSeparDay = [conversSeparDate.getFullYear().toString(), conversSeparDate.getMonth().toString(), addZero (conversSeparDate.getDate().toString())]
 
-          const getPreviousSeparDay = searchStorage(
-            JSON.parse(localStorage.getItem("storageDate")),
-            previousSeparDay[0],
-            previousSeparDay[1],
-            previousSeparDay[2]
-          )          
-
-          // conversionDate ( today[i].startRange ) < conversionDate ( separatedDate ) 
-          for ( let i = index + 1; i < getPreviousSeparDay.length; i++) {
-            if ( getPreviousSeparDay[i] != null && conversionDate ( getPreviousSeparDay[i].endRange ) > conversSeparDate ) {
-              for ( let j = index; j < today.length; j++ ) {
-                if ( today[j] != null && getPreviousSeparDay[i].countSubsequence === today[j].countSubsequence && 
-                  getPreviousSeparDay[i].startRange.toString() === today[j].startRange.toString() &&
-                  getPreviousSeparDay[i].endRange.toString() === today[j].endRange.toString()) {
-                    if ( i != j ) {
-                      return false
-                    }
-                  }              
-                }
-
-          return true            
-            }
-          }
-        }
 
           // for ( let i = index; i < checkPrevious.length; i++) {
           //   if ( today[i] != null && conversionDate ( today[i].startRange ) < conversionDate ( separatedDate ) ) {
@@ -510,53 +615,64 @@ function handlerStorage(separatedDate, storageDate, separatedObjTitle, separated
               storageDate[separatedDate[index]][setPosition] = baseObj
               return storageDate
             }
-/////////////////////////           
-            // storageDate[separatedDate[index]][setPosition] = baseObj
-          storageDate[separatedDate[index]].splice( setPosition, 0, baseObj )  
-          return storageDate                  
-          }       
+/////////////////////////       
+            // for ( let j = setPosition; j < getDateAboutDay.length; j++) {
+            //   if ()
+            // }
+
+            // добавить функцию которая проверяет setPosition элемента в прошлом дне и сравнивает
+            // с нынешним днем и его setPosition и если они разные, то true
+            
+            if ( getDateAboutDay[setPosition + 1] !== undefined || comparesPositionTitleWithPreviousDay (getDateAboutDay, separatedDate, setPosition, 'complianceCheck')) {
+              storageDate[separatedDate[index]].splice( setPosition, 0, baseObj ) 
+              return storageDate 
+            }
+
+            storageDate[separatedDate[index]][setPosition] = baseObj           
+            return storageDate                  
+          }
         }
 
       for ( let j = 0; j < getDateAboutDay.length + 1; j++) {
 
           if ( getDateAboutDay[j] == null ) {
-            let getNextDay = changeDate (baseObj.startRange, true)           
-            if ( checkLongNotes ( getNextDay, j ) ) {               
+            // let getNextDay = changeDate (baseObj.startRange, true)           
+            // if ( checkLongNotes ( getNextDay, j ) ) {               
 
-             let copeDateForMoving = copyElemFromStorage ( getNextDay, j)
+            //  let copeDateForMoving = copyElemFromStorage ( getNextDay, j)
 
-             if ( copeDateForMoving != null ) { 
+            //  if ( copeDateForMoving != null ) { 
 
-              let differenceBetweenDates = (conversionDate (copeDateForMoving.endRange) - 
-              conversionDate (copeDateForMoving.startRange)) / (1000 * 60 * 60 * 24)
+            //   let differenceBetweenDates = (conversionDate (copeDateForMoving.endRange) - 
+            //   conversionDate (copeDateForMoving.startRange)) / (1000 * 60 * 60 * 24)
 
-              const searchFreePosition = searchStorage(
-                JSON.parse(localStorage.getItem("storageDate")),
-                getNextDay[0],
-                getNextDay[1],
-                getNextDay[2]
-              )
+            //   const searchFreePosition = searchStorage(
+            //     JSON.parse(localStorage.getItem("storageDate")),
+            //     getNextDay[0],
+            //     getNextDay[1],
+            //     getNextDay[2]
+            //   )
 
-              countOccupiedPosition = 0
-              positionOriginalElemForDelete = 0
+            //   countOccupiedPosition = 0
+            //   positionOriginalElemForDelete = 0
 
-                for ( let k = 0; k < searchFreePosition.length + 1; k++ ) { 
-                  if ( searchFreePosition[k] == null) {
-                    countOccupiedPosition = k   
-                    break                 
-                  } 
+            //     for ( let k = 0; k < searchFreePosition.length + 1; k++ ) { 
+            //       if ( searchFreePosition[k] == null) {
+            //         countOccupiedPosition = k   
+            //         break                 
+            //       } 
 
-                  if ( copeDateForMoving.countSubsequence == searchFreePosition[k].countSubsequence &&
-                    copeDateForMoving.startRange.toString() == searchFreePosition[k].startRange.toString() && 
-                    copeDateForMoving.endRange.toString() == searchFreePosition[k].endRange.toString() ) {
-                      positionOriginalElemForDelete = k
-                  }                                                   
-                }
-                storageDate = separationObj ( getNextDay, separatedDate, true,  differenceBetweenDates, countOccupiedPosition, copeDateForMoving, 
-                positionOriginalElemForDelete )
+            //       if ( copeDateForMoving.countSubsequence == searchFreePosition[k].countSubsequence &&
+            //         copeDateForMoving.startRange.toString() == searchFreePosition[k].startRange.toString() && 
+            //         copeDateForMoving.endRange.toString() == searchFreePosition[k].endRange.toString() ) {
+            //           positionOriginalElemForDelete = k
+            //       }                                                   
+            //     }
+            //     storageDate = separationObj ( getNextDay, separatedDate, true,  differenceBetweenDates, countOccupiedPosition, copeDateForMoving, 
+            //     positionOriginalElemForDelete )
                   
-              }
-            }
+            //   }
+            // }
 
               setPosition = j
 
@@ -730,7 +846,7 @@ function removeTitle(elem) {
   }           
 }
 
-function circleChooseColor(buttonChooseColor, modalContent) {
+function circleChooseColor(buttonChooseColor, modalContent, buttonClose, buttonDelete, buttonSave, modalAnimation, elemsAll) {
   let listColors = ['rgb(140, 70, 215)', 'rgb(113, 127, 6)', 'rgb(141, 16, 12)', 'rgb(173, 163, 21)', 'rgb(38, 137, 137)']
   for (let i = 0; i < listColors.length; i++) {
     let circleOuter = document.createElement("div")       
@@ -753,12 +869,21 @@ function circleChooseColor(buttonChooseColor, modalContent) {
         circleInner.style.backgroundColor = listColors[i]           
         circleOuter.appendChild(circleInner)                
       }      
-      modalContent.style.borderColor = listColors[i]              
+      modalContent.style.borderColor = listColors[i]                         
+      buttonClose.style.backgroundColor = listColors[i]              
+      buttonChooseColor.style.borderColor = listColors[i]              
+      buttonDelete.style.borderColor = listColors[i]              
+      buttonSave.style.borderColor = listColors[i]   
+      modalAnimation.style.backgroundColor = listColors[i]         
+      for (let j = 0; j < elemsAll.length; j++) {
+        elemsAll[j].style.borderColor = listColors[i]
+      }
+      // elemsAll.style.borderColor = listColors[i]              
     }    
   }      
 }  
 
-function addColorBorder (elem, splitELem, indexTitle) {
+function addColorBorder (elem, splitELem, indexTitle, key) {
   const dayInfo = searchStorage(
     JSON.parse(localStorage.getItem("storageDate")),
     splitELem[0],
@@ -766,8 +891,13 @@ function addColorBorder (elem, splitELem, indexTitle) {
     splitELem[2]
   )
 
-  if(dayInfo[indexTitle] != null) {
-    elem.style.borderColor = dayInfo[indexTitle].color
+  if(dayInfo[indexTitle] != null && "border" == key) {
+    elem.style.borderColor = dayInfo[indexTitle].color    
+  }
+
+  if(dayInfo[indexTitle] != null && "bgc" == key) {
+    elem.style.backgroundColor = dayInfo[indexTitle].color
+    
     }
 }
 
@@ -834,7 +964,7 @@ function checkDate (elem, getElemRangeDate, i, key) {
   }       
 }
 
-function displayDate (elemRangeDate, splitELem, elemCell, key) {  
+function displayDate (elemRangeDate, splitELem, elemCell, indexTitleForColor, key) {  
   
   for (let i = 0; i < 9; i++) {
     let userSelectsDate = document.createElement("div")
@@ -844,6 +974,8 @@ function displayDate (elemRangeDate, splitELem, elemCell, key) {
     elemRangeDate.appendChild(userSelectsDate)   
 
     let getElemChooseUser = elemRangeDate.querySelectorAll(".userSelectsDate")
+    // circleChooseColor(buttonChooseColor, userSelectsDate, buttonClose, buttonDelete, buttonSave, elemsAll )    
+    addColorBorder (userSelectsDate, splitELem, indexTitleForColor, "border")    
 
     if ( i > 2 && i < 6 ) {     
       
@@ -859,7 +991,7 @@ function displayDate (elemRangeDate, splitELem, elemCell, key) {
 
       if ( i === 5 ) {   
           elemRangeDate.value = getElemChooseUser[i].value + "." + getElemChooseUser[i-1].value + "." + getElemChooseUser[i-2].value     
-          console.log(elemRangeDate.value)    
+          // console.log(elemRangeDate.value)    
       }
     }        
 
@@ -874,8 +1006,8 @@ function displayDate (elemRangeDate, splitELem, elemCell, key) {
 
         elemRangeDate.value = getElemRangeDate[5].value + "." + getElemRangeDate[4].value + "." + getElemRangeDate[3].value
 
-        console.log("elem.value")
-        console.log(elemRangeDate.value)
+        // console.log("elem.value")
+        // console.log(elemRangeDate.value)
           }
         } 
       
@@ -893,7 +1025,7 @@ function displayDate (elemRangeDate, splitELem, elemCell, key) {
     }          
   }  
 
-  function getLastDayNote ( elemTemporaryStorage, elemUnaltered, numberCount ) {
+  function getLastDayNote ( elemTemporaryStorage, elemUnaltered, numberCount, numbTitle ) {
     const checkBiggestEndrange = searchStorage(
       JSON.parse(localStorage.getItem("storageDate")),
       elemTemporaryStorage[0],
@@ -911,12 +1043,35 @@ function displayDate (elemRangeDate, splitELem, elemCell, key) {
 
         if ( biggestEndrange < conversionDate ( checkBiggestEndrange[i].endRange ) ) {     
 
-          return getLastDayNote ( checkBiggestEndrange[i].endRange, elemUnaltered, numberCount )
+          return getLastDayNote ( checkBiggestEndrange[i].endRange, elemUnaltered, numberCount, numbTitle )
         }      
       }      
     }
 
-      biggestEndrange = ( biggestEndrange - conversionDate ( unalteredDate ) ) / (1000 * 60 * 60 * 24)      
+      biggestEndrange = ( biggestEndrange - conversionDate ( unalteredDate ) ) / (1000 * 60 * 60 * 24)   
+      
+      for ( let j = 1; j <= biggestEndrange; j++ ) {
+        let allTitlesDay = searchStorage(
+          JSON.parse(localStorage.getItem("storageDate")),
+          elemUnaltered[0],
+          elemUnaltered[1],
+          elemUnaltered[2]
+        )
+
+        elemUnaltered = changeDate (elemUnaltered, true)
+
+        let allTitlesNextDay = searchStorage(
+          JSON.parse(localStorage.getItem("storageDate")),
+          elemUnaltered[0],
+          elemUnaltered[1],
+          elemUnaltered[2]
+        ) 
+
+        if (allTitlesNextDay[numbTitle] != null && allTitlesDay[numbTitle] != allTitlesNextDay[numbTitle]) {
+          
+          return biggestEndrange = j
+        }
+      }
 
       return biggestEndrange
   }
@@ -1026,10 +1181,15 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
   modalWindow.setAttribute("class", "modalWindow")
   document.body.appendChild(modalWindow)
 
+  let modalAnimation = document.createElement("div")
+  modalAnimation.setAttribute("class", "modalAnimation")
+  modalWindow.appendChild(modalAnimation)
+  addColorBorder(modalAnimation, splitELem, indexTitle, "bgc")
+
   let modalContent = document.createElement("div")
   modalContent.setAttribute("class", "modalContent")
-  modalWindow.appendChild(modalContent)
-  addColorBorder(modalContent, splitELem, indexTitle)
+  modalAnimation.appendChild(modalContent)
+  addColorBorder(modalContent, splitELem, indexTitle, "border")
 
   let modalHeader = document.createElement("div")
   modalHeader.setAttribute("class", "modalHeader")
@@ -1045,6 +1205,7 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
   buttonClose.setAttribute("class", "buttonClose")
   buttonClose.setAttribute("src", "icons/cross2.png")
   modalHeader.appendChild(buttonClose)    
+  addColorBorder(buttonClose, splitELem, indexTitle, "bgc")
 
   let modalBody = document.createElement("div")
   modalBody.setAttribute("class", "modalBody")
@@ -1068,13 +1229,13 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
   let startRangeDate = document.createElement("div")
   startRangeDate.setAttribute("class", "RangeDate") 
   startRangeDate.setAttribute("type", "button") 
-  displayDate (startRangeDate, splitELem, getInfoDay(elem, true)[indexTitle], true)
+  displayDate (startRangeDate, splitELem, getInfoDay(elem, true)[indexTitle], indexTitle, true)
   modalSection.appendChild(startRangeDate)     
   
   let endRangeDate = document.createElement("div")
   endRangeDate.setAttribute("class", "RangeDate") 
   endRangeDate.setAttribute("type", "button")
-  displayDate (endRangeDate, splitELem, getInfoDay(elem, true)[indexTitle], false)
+  displayDate (endRangeDate, splitELem, getInfoDay(elem, true)[indexTitle], indexTitle, false)
   modalSection.appendChild(endRangeDate)  
 
 
@@ -1091,18 +1252,35 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
   buttonChooseColor.setAttribute("class", "buttonChooseColor") 
   // modalFooter.appendChild(buttonChooseColor, indexTitle)  ????????? Почему тут indexTitle
   modalFooter.appendChild(buttonChooseColor, indexTitle)    
+  addColorBorder(buttonChooseColor, splitELem, indexTitle, "border")
   
-  circleChooseColor(buttonChooseColor, modalContent)
-  
-  if (titlecell.title != null) {
-    let buttonDelete = document.createElement("div")
-    buttonDelete.setAttribute("class", "buttonDelete")
-    buttonDelete.innerHTML = "delete"
-    buttonDelete.setAttribute("type", "button")
-    modalFooter.appendChild(buttonDelete)
+    
+  let buttonDelete = document.createElement("div")
+  buttonDelete.setAttribute("class", "buttonDelete")
+  buttonDelete.innerHTML = "delete"
+  buttonDelete.setAttribute("type", "button")
+  modalFooter.appendChild(buttonDelete)
+  addColorBorder(buttonDelete, splitELem, indexTitle, "border")
 
-    buttonDelete.onclick = function () {    
-      
+  if ( titlecell.title == null ) {
+    buttonDelete.style.display = "none"
+  }
+
+  let buttonSave = document.createElement("div")  
+  buttonSave.setAttribute("class", "buttonSave")
+  buttonSave.innerHTML = "save"
+  buttonSave.setAttribute("type", "button")
+  modalFooter.appendChild(buttonSave)    
+  addColorBorder(buttonSave, splitELem, indexTitle, "border")
+
+  let elemsAll = document.querySelectorAll(".userSelectsDate")
+  console.log("все элементы")
+  console.log(elemsAll)
+  circleChooseColor ( buttonChooseColor, modalContent, buttonClose, buttonDelete, buttonSave, modalAnimation, elemsAll )
+
+  /////////
+
+    buttonDelete.onclick = function () {          
       const getDateCountSub = searchStorage(
           JSON.parse(localStorage.getItem("storageDate")),
           startRangeDate.value.split(".")[0],
@@ -1235,13 +1413,8 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
       daysInfo(elem, titlecell)    
       modalWindow.remove()
     }
-  }
- 
-  let buttonSave = document.createElement("div")  
-  buttonSave.setAttribute("class", "buttonSave")
-  buttonSave.innerHTML = "save"
-  buttonSave.setAttribute("type", "button")
-  modalFooter.appendChild(buttonSave)  
+  
+    ///////////
 
   buttonSave.onclick = function () {      
 
@@ -1290,10 +1463,59 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
         headerInput.value = ""
       }, 300)
     }           
+
+    
+
+    console.log("Elem indexTitle")
+    // console.log(getIndexTitle[indexTitle].startRange.toString() === temporaryStorage.startRangeDateDisplay.toString())
+    // console.log(getIndexTitle[indexTitle].countSubsequence)
+    console.log(temporaryStorage.countSubsequence)
+    // console.log(getIndexTitle[indexTitle])
+    console.log("Elem indexTitle")
+
+    let differenceBetweenDatesInDays = 
+    (conversionDate (temporaryStorage.endRangeDateDisplay) - conversionDate (temporaryStorage.startRangeDateDisplay)) / (1000 * 60 * 60 * 24)
+
+    if (temporaryStorage.indexTitle != null) { 
+
+      const getIndexTitle = searchStorage (
+        JSON.parse(localStorage.getItem("storageDate")),
+        splitELem[0],
+        splitELem[1],
+        splitELem[2]
+      )
+
+      if ( getIndexTitle[indexTitle].startRange.toString() === temporaryStorage.startRangeDateDisplay.toString() &&
+      getIndexTitle[indexTitle].endRange.toString() === temporaryStorage.endRangeDateDisplay.toString() ) {
+        for ( let i = 0; i <= differenceBetweenDatesInDays; i++) {  
+
+          separationObj(temporaryStorage)
+
+          if ( conversionDate ( temporaryStorage.date ) >= conversionDate ( document.querySelector(".cellTable").value.split(".") ) && 
+          conversionDate ( temporaryStorage.date ) <= conversionDate ( document.querySelectorAll(".cellTable")[41].value.split(".") ) ) { 
+          removeTitle ( getDayCellTable ( temporaryStorage.date ) )
+          daysInfo ( getDayCellTable ( temporaryStorage.date ), true )  
+        }
+
+          temporaryStorage.date = changeDate (temporaryStorage.date, i)
+        }       
+
+        return modalWindow.remove()
+      }     
+      
+      // console.log("indexTitle")
+      // console.log(baseObj)
+      // console.log("indexTitle")
+      // storageDate[separatedDate[index]][indexTitle] = baseObj      
+                             
+      // return storageDate
+    }   
+ 
+    
+
     if ( temporaryStorage.startRangeDateDisplay.toString() != temporaryStorage.endRangeDateDisplay.toString() ) {
       
-      let differenceBetweenDatesInDays = 
-    (conversionDate (temporaryStorage.endRangeDateDisplay) - conversionDate (temporaryStorage.startRangeDateDisplay)) / (1000 * 60 * 60 * 24)
+      
     
       let numberCount = checkChooseCellsDate ( temporaryStorage.date, differenceBetweenDatesInDays, 0, [] )
 
@@ -1326,8 +1548,8 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
               getNextDay[2]
             )
 
-            countOccupiedPosition = 0
-            positionOriginalElemForDelete = 0
+            let countOccupiedPosition 
+            let positionOriginalElemForDelete 
 
               for ( let k = 0; k < searchFreePosition.length + 1; k++ ) { 
                 if ( searchFreePosition[k] == null) {
@@ -1345,6 +1567,7 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
               storageDate = separationObj ( getNextDay, true,  differenceBetweenDates, countOccupiedPosition, copeDateForMoving, 
                 positionOriginalElemForDelete )         
             }
+            break
           }
         }
       }
@@ -1360,36 +1583,12 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
       removeTitle ( getDayCellTable ( temporaryStorage.date ) )
       daysInfo ( getDayCellTable ( temporaryStorage.date ), differenceBetweenDatesInDays )   
       }
-    
-                      
-        
-      console.log("indexTitle")
-      // console.log(getDateAboutDay)
-      // console.log( getSurprise ( temporaryStorage ) )
-
-     let additionalDays = getLastDayNote ( temporaryStorage.endRangeDateDisplay, temporaryStorage.endRangeDateDisplay, getNumbTitle ( temporaryStorage ) ) || 0
-
-    //  function deleteNulls ( dataYYMMdd,  ) {
-    //   const getNotesDay = searchStorage(
-    //     JSON.parse(localStorage.getItem("storageDate")),
-    //     dataYYMMdd[0],
-    //     dataYYMMdd[1],
-    //     dataYYMMdd[2]
-    //   )
-    //   console.log("getNotesDay")
-    //   console.log(dataYYMMdd)
-    //   console.log(getNotesDay[getNotesDay.length - 1] == null)
-    //   if ( getNotesDay[getNotesDay.length - 1] == null ) {
-        
-    //   }
-      
-
-    // }
-     
+       
+      let additionalDays = getLastDayNote ( temporaryStorage.endRangeDateDisplay, temporaryStorage.endRangeDateDisplay, 0,
+      getNumbTitle ( temporaryStorage ) ) || 0
+       
       for ( let i = 1; i <= differenceBetweenDatesInDays + additionalDays; i++) {
 
-        // deleteNulls ( temporaryStorage.date, )
-                
         temporaryStorage.date = changeDate (temporaryStorage.date, i)        
               
         temporaryStorage.countSubsequence = numberCount
@@ -1409,6 +1608,9 @@ function modalWindow(elem, titlecell, splitELem, indexTitle) {
       }
       return modalWindow.remove()
     }
+
+
+
              
       separationObj(temporaryStorage)
   
