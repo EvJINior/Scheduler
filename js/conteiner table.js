@@ -67,8 +67,8 @@ function daysInfo(elem, key) {
       // console.log( getStyle )
 
       titleCell.onclick = function() {                   
-        if ( getInfoDay( elem, true )[i] == null ) {
-
+        if ( getInfoDay( elem, true )[i] == null ) {          
+          // titleCell.style.width = widthElemTitle + "px"
           modalTaskList(elem, getInfoDay(elem, false), getInfoDay(elem, true))
           return
         }  
@@ -76,16 +76,15 @@ function daysInfo(elem, key) {
         modalWindow(elem, getInfoDay(elem, true)[i], getInfoDay(elem, false), i)                                  
         }
 
-      if (i > 5) {
-        titleCell.innerHTML = '...'
-        titleCell.style.backgroundColor = "tan" 
-        titleCell.onclick = function() {
-          modalTaskList(elem, getInfoDay(elem, false), getInfoDay(elem, true))
-        }        
-        return        
-      } 
-
       
+
+      // if ( getTitle == null ) {
+
+      // }
+
+      if ( getTitle == null ) {
+        titleCell.style.marginLeft = "6px"
+      }
 
       if ( getTitle != null && getTitle.startRange.toString() != getTitle.endRange.toString() ) {
         let differenceBetweenDates = (conversionDate (getTitle.endRange) - 
@@ -159,7 +158,35 @@ function daysInfo(elem, key) {
       // }
    
 
-        
+      ////////////////// Убрать подщет NULL в дне... тоесть добавить функцию или ... которая определяет только полноценные заметки и выщитываем 
+      ////////////////// наш if( который ниже ) и выдоем titleCell.innerHTML = '...' исходя из расчета без NULL заметок!!!!!!!!
+
+       // if (i == elem.querySelectorAll(".titleCell").length) {
+      
+    //   let limit = 0
+    //   for ( let k = 0; k < getInfoDay(elem, true).length; k++ ) {
+    //     if ( getInfoDay(elem, true) != null ) {
+    //       limit =+ 1      
+    //     }
+    //   }
+
+    //   if ( limit > 2 ) {
+    //     titleCell.innerHTML = '...'
+    //     titleCell.style.backgroundColor = "rgba(14, 94, 114, 0.963)" 
+    //   }
+
+    //   return        
+    // } 
+           
+
+      if (i > 2) {
+        titleCell.innerHTML = '...'
+        titleCell.style.backgroundColor = "rgba(14, 94, 114, 0.963)" 
+        titleCell.onclick = function() {
+          modalTaskList(elem, getInfoDay(elem, false), getInfoDay(elem, true))
+        }        
+        return        
+      } 
             
       
     }  
@@ -211,8 +238,7 @@ function daysInfo(elem, key) {
             return modalWindow(cellTable, "null", getInfoDay(cellTable, false))
 
           }  
-          // console.log(cellTable.querySelectorAll('.titleCell').length)
-          // console.log( getInfoDay(cellTable, true)[cellTable.querySelectorAll('.titleCell').length - 1] == null )
+          
         modalTaskList( cellTable, getInfoDay(cellTable, false), getInfoDay(cellTable, true) )
 
         }

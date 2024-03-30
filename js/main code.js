@@ -125,10 +125,12 @@ function highlightToday(elem) {
   for (let i = 0; i < elem.length; i++) {
     if (elem[i].value == date) {
       console.log(elem[i])
-      elem[i].style.border = "6px rgb(26, 125, 149) solid"
+      elem[i].setAttribute ("class", "navAnimation")
+      // elem[i].style.border = "6px rgb(75, 28, 140) solid"
       setTimeout(
-        () => (elem[i].style.border = "1px rgb(26, 125, 149) solid"),
-        500
+        // () => (elem[i].style.border = "1px rgb(26, 125, 149) solid"),
+        () => (elem[i].setAttribute ("class", "cellTable")),
+        1300
       )
     }
   }
@@ -146,6 +148,8 @@ function highlightMonth(elem) {
     }
   }
 }
+
+
 
 let container = document.createElement("div")
 container.setAttribute("class", "container")
@@ -180,6 +184,12 @@ ChangeRight.setAttribute("class", "fa fa-angle-right")
 ChangeRight.setAttribute("type", "button")
 headerNav.appendChild(ChangeRight)
 
+let navScheduler = document.createElement("div")
+navScheduler.setAttribute("class", "navScheduler")
+navScheduler.setAttribute("type", "button")
+navScheduler.innerHTML = "Scheduler"
+headerNav.appendChild(navScheduler)
+
 let navToday = document.createElement("div")
 navToday.setAttribute("class", "navToday")
 navToday.setAttribute("type", "button")
@@ -192,15 +202,13 @@ navYear.setAttribute("type", "button")
 navYear.innerHTML = "Year"
 headerNav.appendChild(navYear)
 
-// let numbMonth = document.createElement("div")
-// numbMonth.setAttribute("class", "numbMonth")
-// numbMonth.setAttribute("type", "button")
-// numbMonth.innerHTML = Months[referenceDate.month]
-// head.appendChild(numbMonth)
+let content = document.createElement("div")
+content.setAttribute("class", "content")
+container.appendChild(content)
 
-// function animationChange (  ) {
+startMonth(referenceDate, content)
 
-// }
+
 
 ChangeRight.onclick = function () {
   if (content.contains(document.querySelector(".cellMonth")) == true) {
@@ -263,11 +271,42 @@ navYear.onclick = function () {
   // numbMonth.innerHTML = referenceDate.year
 }
 
-let content = document.createElement("div")
-content.setAttribute("class", "content")
-container.appendChild(content)
 
-startMonth(referenceDate, content)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// let numbMonth = document.createElement("div")
+// numbMonth.setAttribute("class", "numbMonth")
+// numbMonth.setAttribute("type", "button")
+// numbMonth.innerHTML = Months[referenceDate.month]
+// head.appendChild(numbMonth)
+
+// function animationChange (  ) {
+
+// }
+
+
+
+
+
+
+
+
 
 // let weeks = document.createElement("div")
 // weeks.setAttribute("class", "weeks")

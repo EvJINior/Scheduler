@@ -14,8 +14,8 @@
     flex-direction: row;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
-    justify-content: left;
-    column-gap: 8px;
+    justify-content: center;
+    column-gap: 10px;
 
 }
 
@@ -29,11 +29,11 @@ i {
 }
 
 i.fa {
-    font-size: 30px;
+    font-size: 26px;
 }
 
 i.fa:hover {
-    background-color: rgb(120, 174, 188);
+    background-color: rgb(128, 194, 209);
 }
 
 i.fa:active {
@@ -42,27 +42,74 @@ i.fa:active {
 
 .navNameMonth {
     font-family: Arial, Helvetica, sans-serif;
-    border: 1px rgb(26, 125, 149) solid;
-    padding: 20px 20px;
+    font-size: 26px;
+    border: 1px rgb(75, 28, 140) solid;
+    padding: 20px 40px;
+}
+
+.navScheduler {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 26px;
+    border: 1px rgb(131, 92, 16) solid;
+    padding: 20px 100px;
+    background-color: rgba(21, 119, 144, 0.507);
+    color: #624500;
 }
 
 .navToday {
     font-family: Arial, Helvetica, sans-serif;
-    border: 1px rgb(26, 125, 149) solid;
+    font-size: 26px;
+    border: 1px rgb(187, 110, 16) solid;
     padding: 20px 60px;
 }
 
 .navToday:active {
     /* transform: skew(-4deg, 2deg); */
-    background-color: rgba(21, 119, 144, 0.963);
+    background-color: rgb(128, 194, 209);
 }
 
 .navToday:hover {
-    background-color: rgb(120, 174, 188);
+    background-color: rgb(128, 194, 209);
+}
+
+.navAnimation {
+
+    background-repeat: no-repeat;
+    background-image: linear-gradient(to right, #0d7775 100%, #0d7775 100%),
+        linear-gradient(to bottom, #906109 100%, #0d7775 100%),
+        linear-gradient(to right, #0d7775 100%, #7b530b 100%),
+        linear-gradient(to bottom, #74510c 100%, #78570c 100%);
+    background-size: 100% 6px, 6px 100%, 100% 6px, 6px 100%;
+    background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+    animation: navTodayAnimation 1.25s cubic-bezier(0.19, 1, 0.22, 1) 1;
+
+}
+
+@keyframes navTodayAnimation {
+    0% {
+        background-size: 0 6px, 6px 0, 0 6px, 6px 0;
+    }
+
+    25% {
+        background-size: 100% 6px, 6px 0, 0 6px, 6px 0;
+    }
+
+    50% {
+        background-size: 100% 6px, 6px 100%, 0 6px, 6px 0;
+    }
+
+    75% {
+        background-size: 100% 6px, 6px 100%, 100% 6px, 6px 0;
+    }
+
+    100% {
+        background-size: 100% 6px, 6px 100%, 100% 6px, 6px 100%;
+    }
 }
 
 .navYear {
     font-family: Arial, Helvetica, sans-serif;
+    font-size: 26px;
     border: 1px rgb(26, 125, 149) solid;
     padding: 20px 60px;
 }
@@ -73,7 +120,7 @@ i.fa:active {
 }
 
 .navYear:hover {
-    background-color: rgb(120, 174, 188);
+    background-color: rgb(128, 194, 209);
 }
 
 .content {
@@ -85,11 +132,11 @@ i.fa:active {
 
 .monthView {
     grid-template-columns: repeat(7, calc(calc(100% / 7) - 2px));
-    grid-auto-rows: minmax(50px, 150px);
+    grid-auto-rows: minmax(50px, 100px);
 }
 
 .cellTable {
-    border: 1px rgb(26, 125, 149) solid;
+    border: 1px rgb(13, 63, 112) solid;
 }
 
 
