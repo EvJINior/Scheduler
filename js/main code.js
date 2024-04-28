@@ -1,4 +1,3 @@
-// import content from './conteiner table.js'
 // localStorage.clear()
 
 const months = [
@@ -25,12 +24,12 @@ const nameDaysWeek = [
   "Saturday",
   "Sunday",
 ]
-// startMonth
+
+const arrayRight = '<svg viewBox="-6 -9 36 32"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"></path></svg>'
+const arrayLeft = '<svg viewBox="-6 -9 36 32"><path d="M15.41 16.59 10.83 12l4.58-4.59L14 6l-6 6 6 6z"></path></svg>'
+
 function addZero (elem) {
-  if (elem < 10 && elem[0] != 0) {    
-    return elem = "0" + elem
-  } 
-return elem
+return elem < 10 ? `0${elem}` : elem
 }
 
 let referenceDate = {
@@ -44,7 +43,7 @@ function handlerDayWeek(numbDay) {
   else return numbDay
 }
 
-function handlerMonth(Object, numbMonth, numbYear) {
+function handlerNumbMonth(Object, numbMonth, numbYear) {
   if (numbMonth > 11) return (Object.month = 0), (Object.year = numbYear + 1)
   if (numbMonth < 0) return (Object.month = 11), (Object.year = numbYear - 1)
   else return Object.month, Object.year
@@ -69,41 +68,6 @@ function changesDate(object) {
   getNavNameMonth[0].innerHTML = object.year + " " + months[object.month]
 }
 
-// function changesDate (object) {
-//   let monthViewCopy = content.querySelector(".monthView")
-
-//   let box = document.createElement("div")
-//   box.setAttribute("class", "box")
-//   box.setAttribute("type", "button")
-//   monthViewCopy.appendChild(box)
-      
-//   // let getCellTable = content.querySelectorAll(".cellTable") 
-//   let getNavNameMonth = headerNav.querySelectorAll(".navNameMonth")
-  
-//     // console.log("monthView3")
-//     // console.log(monthViewCopy)
-//   for (let i = 0; i < 42; i++) {
-//     let cellTable = document.createElement("div")
-//       cellTable.setAttribute("class", "cellTable")
-//       cellTable.setAttribute("type", "button")
-//       box.appendChild(cellTable)
-//     let days = new Date(
-//       object.year,
-//       object.month,
-//       i - handlerDayWeek(new Date(object.year, object.month, 1).getDay()) + 2
-//     )
-//     cellTable.innerHTML = handlerNumbDay(days.getDate(), days.getMonth())
-//     // getCellTable[i].innerHTML = handlerNumbDay(days.getDate(), days.getMonth())
-//     cellTable.value = days.getFullYear() + "." + days.getMonth() + "." + addZero(days.getDate())
-    
-//     daysInfo(cellTable)    
-//   }
-  
-//   getNavNameMonth[0].innerHTML = object.year + " " + months[object.month]
-// }
-
-
-// ???????????????????????????????????????????????????????????????????????????????????
 function handlerNumbDay(numb, month) {
   let processedMonth = month + 1
   if (numb < 10) {
@@ -117,39 +81,28 @@ function handlerNumbDay(numb, month) {
     return numb
   }  
 }
-// Для чего эта функция, пересмотреть её!!!
-// ???????????????????????????????????????????????????????????????????????????????????
 
-function highlightToday(elem) {
-  let date = referenceDate.year + "." + referenceDate.month + "." + addZero(new Date().getDate())
-  for (let i = 0; i < elem.length; i++) {
-    if (elem[i].value == date) {
-      console.log(elem[i])
-      elem[i].setAttribute ("class", "navAnimation")
-      // elem[i].style.border = "6px rgb(75, 28, 140) solid"
-      setTimeout(
-        // () => (elem[i].style.border = "1px rgb(26, 125, 149) solid"),
-        () => (elem[i].setAttribute ("class", "cellTable")),
-        1300
+function highlightElem ( elem ) {
+  let dateToday = referenceDate.year + "." + referenceDate.month + "." + addZero(new Date().getDate())
+  let dateMonth = referenceDate.year + "." + new Date().getMonth()
+  for ( let i = 0; i < elem.length; i++ ) { 
+    if ( elem[i].value == dateToday ) { 
+      elem[i].style.border = "3px rgba(21, 119, 144, 0.963) solid"
+      setTimeout(  
+        () => ( elem[i].style.border = "1px rgb(26, 125, 149) solid" ),        
+        700
       )
     }
-  }
-}
 
-function highlightMonth(elem) {
-  let date = referenceDate.year + "." + new Date().getMonth()
-  for (let i = 0; i < elem.length; i++) {
-    if (elem[i].value == date) {
-      elem[i].style.border = "6px rgb(30, 91, 117) solid"
+    if ( elem[i].value == dateMonth ) { 
+      elem[i].style.border = "6px rgba(21, 119, 144, 0.963) solid"
       setTimeout(
-        () => (elem[i].style.border = "1px rgb(26, 125, 149) solid"),
+        () => ( elem[i].style.border = "1px rgb(26, 125, 149) solid" ),
         500
       )
     }
-  }
+  }  
 }
-
-
 
 let container = document.createElement("div")
 container.setAttribute("class", "container")
@@ -163,42 +116,33 @@ let headerNav = document.createElement("div")
 headerNav.setAttribute("class", "headerNav")
 head.appendChild(headerNav)
 
-// let navChangeMonth = document.createElement("div")
-// navChangeMonth.setAttribute("class", "navChangeMonth")
-// navChangeMonth.setAttribute("type", "button")
-// headerNav.appendChild(navChangeMonth)
-
-let ChangeLeft = document.createElement("i")
-ChangeLeft.setAttribute("class", "fa fa-angle-left")
-ChangeLeft.setAttribute("type", "button")
+let ChangeLeft = document.createElement("div")
+ChangeLeft.setAttribute("class", "change")
+ChangeLeft.innerHTML = arrayLeft
 headerNav.appendChild(ChangeLeft)
 
 let navNameMonth = document.createElement("div")
 navNameMonth.setAttribute("class", "navNameMonth")
-navNameMonth.setAttribute("type", "button")
 navNameMonth.innerHTML = referenceDate.year + " " + months[referenceDate.month]
 headerNav.appendChild(navNameMonth)
 
 let ChangeRight = document.createElement("i")
-ChangeRight.setAttribute("class", "fa fa-angle-right")
-ChangeRight.setAttribute("type", "button")
+ChangeRight.setAttribute("class", "change")
+ChangeRight.innerHTML = arrayRight
 headerNav.appendChild(ChangeRight)
 
 let navScheduler = document.createElement("div")
 navScheduler.setAttribute("class", "navScheduler")
-navScheduler.setAttribute("type", "button")
 navScheduler.innerHTML = "Scheduler"
 headerNav.appendChild(navScheduler)
 
 let navToday = document.createElement("div")
 navToday.setAttribute("class", "navToday")
-navToday.setAttribute("type", "button")
 navToday.innerHTML = "Today"
 headerNav.appendChild(navToday)
 
 let navYear = document.createElement("div")
 navYear.setAttribute("class", "navYear")
-navYear.setAttribute("type", "button")
 navYear.innerHTML = "Year"
 headerNav.appendChild(navYear)
 
@@ -208,21 +152,14 @@ container.appendChild(content)
 
 startMonth(referenceDate, content)
 
-
-
 ChangeRight.onclick = function () {
   if (content.contains(document.querySelector(".cellMonth")) == true) {
     content.querySelector(".yearView").remove()
     handlerYear((referenceDate.year += 1))
     return
-    // numbMonth.innerHTML = referenceDate.year
   }
-    handlerMonth(referenceDate, (referenceDate.month += 1), referenceDate.year)
+    handlerNumbMonth(referenceDate, (referenceDate.month += 1), referenceDate.year)
     changesDate(referenceDate)
-    // startAnimation(referenceDate, handlerNumbDay, content)
-
-    // numbMonth.innerHTML = Months[referenceDate.month]       
-    // handlerWeek (referenceDate, content,  handlerNumbDay, referenceDate.month)   
 }
 
 ChangeLeft.onclick = function () {
@@ -230,29 +167,21 @@ ChangeLeft.onclick = function () {
     content.querySelector(".yearView").remove()
     handlerYear((referenceDate.year -= 1))
     return
-    // numbMonth.innerHTML = referenceDate.year    
   }    
-    handlerMonth(referenceDate, (referenceDate.month -= 1), referenceDate.year)
+    handlerNumbMonth(referenceDate, (referenceDate.month -= 1), referenceDate.year)
     changesDate(referenceDate)
-    // numbMonth.innerHTML = Months[referenceDate.month]
-    // handlerWeek (referenceDate, content,  handlerNumbDay, referenceDate.month)  
 }
-
-
-
-
 
 navToday.onclick = function () {
   if (content.contains(document.querySelector(".cellTable")) == false) {
     content.querySelector(".yearView").remove()
     startMonth(referenceDate, content)        
-  }
+  } 
 
   referenceDate.month = new Date().getMonth()
   referenceDate.year = new Date().getFullYear()
   changesDate(referenceDate)
-  highlightToday(document.querySelectorAll(".cellTable"))  
-  // numbMonth.innerHTML = Months[referenceDate.month]
+  highlightElem(document.querySelectorAll(".cellTable"))  
 }
 
 navYear.onclick = function () {
@@ -267,80 +196,6 @@ navYear.onclick = function () {
     handlerYear((referenceDate.year = new Date().getFullYear()))    
   }
 
-  highlightMonth(content.querySelectorAll(".cellMonth"))
-  // numbMonth.innerHTML = referenceDate.year
+  highlightElem(content.querySelectorAll(".cellMonth"))
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// let numbMonth = document.createElement("div")
-// numbMonth.setAttribute("class", "numbMonth")
-// numbMonth.setAttribute("type", "button")
-// numbMonth.innerHTML = Months[referenceDate.month]
-// head.appendChild(numbMonth)
-
-// function animationChange (  ) {
-
-// }
-
-
-
-
-
-
-
-
-
-// let weeks = document.createElement("div")
-// weeks.setAttribute("class", "weeks")
-// weeks.setAttribute("type", "button")
-// content.appendChild(weeks)
-
-// handlerWeek (referenceDate, weeks,  handlerNumbDay, referenceDate.month)
-
-
-
-// function startAnimation(referenceDate, handlerNumbDay, content) { 
-//   let monthView = document.createElement("div")
-//   monthView.setAttribute("class", "monthView content")
-//   content.appendChild(monthView)  
-
-//   for (let i = 0; i < 42; i++) {
-//     let cellTable = document.createElement("div")
-//     cellTable.setAttribute("class", "cellTable")
-//     cellTable.setAttribute("type", "button")
-//     monthView.appendChild(cellTable)
-
-//     let days = new Date(
-//       referenceDate.year,
-//       referenceDate.month,
-//       i - handlerDayWeek(new Date(referenceDate.year, referenceDate.month, 1).getDay()) + 2
-//       )
-//     cellTable.innerHTML = handlerNumbDay(days.getDate(), days.getMonth())
-//     cellTable.value = days.getFullYear() + "." + days.getMonth() + "." + addZero(days.getDate())   
-
-//     // console.log("days " + i)
-//     // let fff = document.querySelectorAll(".cellTable")[i]
-//     // console.log(fff)
-//     // console.log(fff.querySelectorAll(".titleCell"))
-
-//     daysInfo(cellTable)    
-//   }
-// }

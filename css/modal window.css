@@ -16,7 +16,7 @@
     outline: 0; */
 }
 
-.modalAnimation {
+/* .modalAnimation {
     display: flex;
     width: 520px;
     height: 300px;
@@ -29,168 +29,102 @@
     position: relative;
     overflow: hidden;
     border-radius: 20px;
-
-}
+} */
 
 .modalContent {
     display: flex;
     flex-direction: column;
     width: 500px;
-    height: 280px;
-    background-color: rgb(65, 63, 63);
+    /* height: 280px; */
+    background-color: rgb(255, 255, 255);
     /* border: 5px rgb(0, 0, 0) solid; */
-    position: relative;
+    /* position: relative; */
+    /* border-radius: 20px; */
+    margin: auto;
+    margin-top: 250px;
     border-radius: 20px;
 }
-
-
-.modalAnimation::before {
-    content: '';
-    position: absolute;
-    width: 900px;
-    height: 200px;
-    background-color: rgba(238, 238, 238, 0.804);
-    animation: rotate 60s linear infinite;
-}
-
-.modalAnimation::after {
-    content: '';
-    background-color: #2c1b8c;
-    border-radius: 16px;
-}
-
-
-/* border-radius: 10px;     */
-/* border-color: aqua; */
-
-@keyframes rotate {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-/*
-.modalContent {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    position: relative;
-    width: 500px;
-    height: 290px;
-    margin: 200px auto;
-    background-color: rgb(65, 63, 63);
-    border: 3px rgb(0, 0, 0) solid;
-    border-radius: 20px;
-}
-
-.modalContent::before {
-    content: '';
-    position: absolute;
-    width: 500px;
-    height: 290px;
-    background-color: #912727;
-    animation: rotate 2s linear infinite;
-}
-
-.modalContent::after {
-    content: '';
-    position: absolute;
-    width: 500px;
-    height: 290px;
-    background-color: #2c1b8c;
-    animation: rotate 2s linear infinite;
-    animation-delay: -1s;
-}
-
-.modalContent span {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    width: calc(100% - 10px);
-    height: calc(100% - 10px);
-    z-index: 2;
-    background-color: black;
-    border-radius: 16px;
-}
-
- */
-
-
 
 .modalHeader {
     display: flex;
-    /* width: 500px; */
-    height: 60px;
+    /* height: 60px; */
     background-color: rgb(0, 0, 0);
     border-radius: 10px 10px 0 0;
-    /* z-index: 2; */
+
 }
 
 .headerTitle {
     text-align: center;
     width: 100%;
     font-size: 34px;
-    color: rgb(216, 216, 216);
-    padding-top: 6px;
-
+    color: rgb(255, 255, 255);
+    padding: 5px;
 }
 
 .buttonClose {
-    height: 30px;
+    height: 28px;
     width: 30px;
-    margin: 6px;
+    margin: 8px 9px 0px 0px;
     background-color: rgb(255, 255, 255);
-    color: white;
-    border-radius: 10px;
+    border-radius: 9px;
+    fill: rgb(0, 0, 0);
+    box-shadow: 0px 0px 8px 0.20rem rgba(255, 255, 255, 0.403);
+}
+
+.buttonClose:hover {
+    background-color: rgb(0, 0, 0);
+    fill: rgb(255, 255, 255);
+}
+
+.buttonClose:active {
+    background-color: rgb(255, 255, 255);
+    fill: rgb(0, 0, 0);
 }
 
 .modalBody {
     display: flex;
     flex-direction: column;
-    /* width: 500px; */
-    /* height: 200px; */
-    background-color: rgb(3, 4, 7);
+    background-color: rgba(158, 158, 158, 0.25);
+    margin: 10px;
+    gap: 4px;
 }
 
 .headerInput {
-    /* width: 500px; */
     height: 30px;
-    color: rgb(0, 0, 0);
+    background-color: #fff;
+    box-shadow: 0 0 0 0.2rem rgba(158, 158, 158, 0.25);
+    font-size: 1rem;
+    border: 4px solid #bdbdbd;
+    border-radius: 8px;
 }
 
 .bodyInput {
-    /* width: 500px; */
     height: 50px;
-    color: rgb(0, 0, 0);
+    background-color: #fff;
+    box-shadow: 0 0 0 0.2rem rgba(158, 158, 158, 0.25);
+    font-size: 1rem;
+    border: 4px solid #bdbdbd;
+    border-radius: 8px;
     resize: none;
-    /* margin-bottom: -4px; */
+
 }
 
 .modalFooter {
     display: flex;
-    /* width: 500px; */
-    height: 80px;
-    background-color: rgb(9, 8, 14);
-    gap: 20px;
     align-items: center;
-    justify-content: end;
-    border-radius: 0 0 10px 10px;
+    justify-content: space-between;
+    padding: 10px 10px;
 }
 
 .buttonChooseColor {
     display: flex;
-    padding: 6px 6px;
-    border: 2px white solid;
-    margin-bottom: 6px;
+    border: 1px rgb(0, 0, 0) solid;
+    border-radius: 6px;
+    box-shadow: 0px 0px 1px 0.25rem rgba(158, 158, 158, 0.25);
     gap: 10px;
-    /* background-color: black; */
 }
+
+
 
 .circleOuter {
     border-radius: 50%;
@@ -198,6 +132,11 @@
     height: 30px;
     background-color: white;
 }
+
+.circleOuter:hover {
+    transform: scale(0.94);
+}
+
 
 .circleInner {
     width: 14px;
@@ -208,37 +147,40 @@
 }
 
 .buttonDelete {
-    /* display: none; */
     text-align: center;
-    font-size: 30px;
-    /* background-color: white; */
+    font-size: 18px;
+    background-color: rgba(195, 41, 41, 0.781);
     color: white;
-    padding: 6px 14px;
-    border: 2px white solid;
-    margin-bottom: 6px;
+    border-radius: 20px;
+    margin-left: 100px;
+    padding: 8px 12px;
+    box-shadow: 0px 0px 6px 0.45rem rgba(158, 158, 158, 0.25);
+}
+
+.buttonDelete:hover {
+    background-color: rgb(186, 53, 53);
 }
 
 .buttonDelete:active {
-    /* transform: skew(-4deg, 2deg); */
-    color: rgba(21, 119, 144, 0.963);
-}
-
-.buttonSave:active {
-    /* transform: skew(-4deg, 2deg); */
-    color: rgba(54, 21, 144, 0.963);
+    background-color: rgb(152, 60, 60);
 }
 
 .buttonSave {
-    /* height: 30px; 
-    width: 80px;       */
     text-align: center;
-    font-size: 30px;
-    /* background-color: white; */
-    margin-right: 10px;
+    font-size: 18px;
+    background-color: rgba(44, 199, 44, 0.812);
+    padding: 8px 12px;
     color: white;
-    padding: 6px 14px;
-    border: 2px white solid;
-    margin-bottom: 6px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 6px 0.45rem rgba(158, 158, 158, 0.25);
+}
+
+.buttonSave:hover {
+    background-color: rgb(47, 195, 47);
+}
+
+.buttonSave:active {
+    background-color: rgb(92, 179, 92);
 }
 
 .titleCell {
@@ -246,12 +188,13 @@
     border: 1px rgb(255, 255, 255) solid;
     font-size: 12px;
     height: 20px;
-    background-color: tan;
+    background-color: rgb(0, 0, 0);
+    color: rgb(0, 0, 0);
+    padding: 2px;
 }
 
 .titleCellChanges {
     position: relative;
-    /* width: 520px; */
     border: 1px rgb(255, 255, 255) solid;
     font-size: 12px;
     height: 20px;
@@ -260,7 +203,6 @@
 
 .modalWindowList {
     background-color: rgba(0, 0, 0, 0.75);
-    /* border: 3px rgb(26, 125, 149) solid; */
     position: fixed;
     top: 0;
     left: 0;
@@ -273,117 +215,90 @@
     display: flex;
     flex-direction: column;
     width: 500px;
-    height: 300px;
-    margin: 200px auto;
-    /* border: 8px solid rgb(235, 242, 40); */
-    /* border-radius: 30% 70% 70% 30%/30% 30% 70% 70%; */
-    box-shadow: 0px 0px 20px 18px rgb(0, 0, 0, 0.2);
-    /* animation: movingSpace 10s infinite; */
-    /* background-color: rgb(0, 0, 0); */
-    /* border: 2px rgb(0, 0, 0) solid; */
-    /* border-radius: 20px 20px 0 0; */
+    margin: auto;
+    margin-top: 250px;
 }
-
-/* 
-@keyframes movingSpace {
-    0% {
-        border-radius: 30% 70% 70% 30%/30% 30% 70% 70%;
-        box-shadow: 15px 15px 50px rgb(0, 0, 0, 0.2);
-    }
-
-    25% {
-        border-radius: 58% 42% 75% 25%/76% 46% 54% 24%;
-    }
-
-    50% {
-        border-radius: 50% 50% 33% 67%/55% 27% 73% 45%;
-        box-shadow: -10 -5 50px rgb(0, 0, 0, 0.2);
-    }
-
-    75% {
-        border-radius: 33% 67% 58% 42%/63% 68% 32% 37%;
-    }
-} */
 
 .modalHeaderList {
     display: flex;
-    width: 500px;
-    height: 60px;
-    background-color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
     border-radius: 20px 20px 0 0;
 }
 
 .headerTitleList {
     text-align: center;
     width: 100%;
-    font-size: 34px;
-    color: rgb(216, 216, 216);
-    padding-top: 6px;
+    font-size: 30px;
+    color: rgb(0, 0, 0);
+    padding-top: 8px;
 }
 
 .buttonCloseList {
-    height: 30px;
-    width: 30px;
-    margin: 6px;
-    /* background-color: white; */
-    color: white;
-    border-radius: 10px;
+    height: 31px;
+    width: 34px;
+    margin: 8px 8px 0px 0px;
+    background-color: rgb(0, 0, 0);
+    border-radius: 12px;
+    fill: white;
+    box-shadow: 0px 0px 10px 0.2rem rgb(35 35 35 / 30%);
+}
+
+
+.buttonCloseList:hover {
+    background-color: rgb(255, 255, 255);
+    fill: rgb(0, 0, 0);
+}
+
+.buttonCloseList:active {
+    background-color: rgb(0, 0, 0);
+    fill: rgb(255, 255, 255);
 }
 
 .modalBodyList {
     display: flex;
     flex-direction: column;
-    width: 500px;
-    height: 200px;
-    background-color: rgba(0, 0, 0, 0.6);
-    overflow-y: scroll;
-    gap: 18px;
+    height: 208px;
+    background-color: rgb(255, 255, 255);
+    overflow-y: auto;
+    gap: 12px;
+    padding: 4px 0 16px 0;
 }
 
 .bodyTitleEntry {
-    width: auto;
-    height: 30px;
     margin: 0px 12px;
-    color: rgb(7, 6, 6);
-    background-color: rgb(175, 212, 249);
-    /* resize: none; */
-    /* margin-bottom: -4px; */
-    /* border-radius: 20px; */
     outline: 10px ridge;
     border-radius: 2rem;
     text-align: center;
     margin-top: 16px;
     font-size: 20px;
-    border: 2px rgb(13, 35, 198) solid;
-    border-color: aqua;
+    background-color: rgb(0, 0, 0);
+    outline-color: rgb(0, 0, 0);
 }
 
-/* .bodyTitleEntry:hover {
-    background-color: rgb(14, 107, 201);
-} */
-
 .buttonAddNote {
-    width: 500px;
-    height: 60px;
+    height: 46px;
     text-align: center;
     font-size: 30px;
-    background-color: rgb(0, 0, 0);
-    margin-right: 6px;
-    color: white;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
     border-radius: 0 0 20px 20px;
-    /* padding: 4px 18px; */
-    /* border: 4px rgb(19, 45, 175) solid; */
-    /* margin-bottom: 18px; */
+    border: 2px rgb(0, 0, 0) solid;
+}
 
+.buttonAddNote:hover {
+    background-color: #bdbdbd;
+}
+
+.buttonAddNote:active {
+    background-color: #000000;
+    color: rgb(255, 255, 255);
 }
 
 .modalSection {
     display: flex;
-    background-color: black;
-    /* gap: 6px; */
-    margin: 4px 0px;
-    justify-content: space-around;
-
+    background-color: rgb(255, 255, 255);
+    margin: 20px 10px;
+    justify-content: space-between;
 }
 
 .RangeDate {
@@ -391,89 +306,28 @@
     grid-template-columns: repeat(3, 70px);
     grid-template-rows: 12px 24px 12px;
     grid-gap: 4px;
-
-    /* display: flex;
-    width: 50%;
-    
-    justify-content: center;
-   
-    margin: 0px 10px;
-    color: white;
-    
-    border: 2px white solid;
-    align-items: center; */
 }
 
 .userSelectsDate {
     display: flex;
-    /* width: 50px;
-    height: 20px; */
-    color: antiquewhite;
-    border: 2px rgb(235, 235, 235) solid;
+    border: 1px rgb(0, 0, 0) solid;
     border-radius: 4px;
     justify-content: center;
     align-items: center;
+    box-shadow: 0px 0px 15px 0.3rem rgba(158, 158, 158, 0.25);
+}
 
+.userArrow:hover {
+    background-color: rgb(0, 0, 0);
+    fill: rgb(255, 255, 255);
+}
+
+.userArrow:active {
+    background-color: rgb(255, 255, 255);
+    fill: rgb(0, 0, 0);
 }
 
 .inputUser {
     width: 100%;
     color: rgb(38, 137, 137);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-.userChoose {
-    width: 100%;
-    border: 1px white solid;
-    display: flex;
-    flex-direction: column;
-    font-size: 20px;
-    background-color: red;
-}
-
-.switch {
-    border: 1px white solid;
-    font-size: 20px;
-    align-self: center;
-    height: 16px;
-    width: 16px;
-    justify-content: center;
-    opacity: 0;
-    transition: all ease 0.8s;
-}
-
-.switch:hover {
-    opacity: 1;
-}
-
-.user {
-    border: 1px white solid;
-    font-size: 10px;
-    height: 20px;
-}
-
-.Up {}
-
-.Down {}
-
-.upUs {
-    border: 1px white solid;
-    font-size: 20px;
-    align-self: center;
-    height: 16px;
-    width: 16px;
-    justify-content: center;
-}
-*/
